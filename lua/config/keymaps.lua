@@ -7,6 +7,7 @@ local func = require('util.func')
 local M = {}
 
 M.groups = {
+  { 'gp', group = 'Goto with preview', icon = { icon = '', color = 'green' } },
   { '<leader>s', group = 'Search' },
   { '<leader>g', group = 'Git', icon = { icon = '', color = 'green' } },
   {'<leader>d', group = 'Debugger', icon = { icon = '󰨰', color = 'blue' } },
@@ -237,7 +238,9 @@ M.fzf = {
     },
     {
       '<leader>gc',
-      '<cmd>FzfLua git_branches<CR>',
+      -- Prevent FzF from sorting the output so that local branches
+      -- are listed first.
+      '<cmd>FzfLua git_branches fzf_opts.--no-sort=true<CR>',
       mode = 'n',
       desc = 'List git branches'
     }
@@ -1040,5 +1043,50 @@ for i = 0, 9 do
     desc = group_name
   })
 end
+
+M.goto_preview = {
+  keys = {
+    {
+      'gpd',
+      function()
+        require('goto-preview').goto_preview_definition()
+      end,
+      mode = 'n',
+      desc = 'Goto definition with preview',
+    },
+    {
+      'gpt',
+      function()
+        require('goto-preview').goto_preview_type_definition()
+      end,
+      mode = 'n',
+      desc = 'Goto type definition with preview',
+    },
+    {
+      'gpi',
+      function()
+        require('goto-preview').goto_preview_implementation()
+      end,
+      mode = 'n',
+      desc = 'Goto implementation with preview',
+    },
+    {
+      'gpr',
+      function()
+        require('goto-preview').goto_preview_references()
+      end,
+      mode = 'n',
+      desc = 'Goto references with preview',
+    },
+    {
+      'gpq',
+      function()
+        require('goto-preview').close_all_win()
+      end,
+      mode = 'n',
+      desc = 'Close all preview windows',
+    }
+  }
+}
 
 return M

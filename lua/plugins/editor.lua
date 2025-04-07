@@ -4,6 +4,26 @@ local config_opts = require('config.opts')
 
 return {
   {
+    'rmagatti/goto-preview',
+    event = 'BufEnter',
+    dependencies = {
+      'rmagatti/logger.nvim'
+    },
+    cond = function()
+      return func.check_global_var('use_goto_preview', true, true)
+    end,
+    opts = {
+      default_mappings = false,
+      references = {
+        provider = 'fzf_lua',
+      },
+      focus_on_open = false,
+      dismiss_on_move = true,
+    },
+    keys = keymaps.goto_preview.keys,
+    config = true,
+  },
+  {
     'azratul/live-share.nvim',
     dependencies = {
       'jbyuki/instant.nvim'
