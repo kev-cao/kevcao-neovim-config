@@ -47,8 +47,8 @@ vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
-vim.opt.textwidth = 100
-vim.opt.formatoptions:remove('tc') -- Prevent autowrapping of comments and text
+vim.opt.textwidth = 80
+vim.opt.formatoptions = 'cqj'
 vim.opt.ruler = true
 vim.opt.cmdheight = 1
 vim.opt.updatetime = 750
@@ -116,3 +116,15 @@ vim.api.nvim_create_autocmd('VimLeave', {
   end,
 })
 
+
+-- Prevent Octo comments from auto-wrapping, which causes weird rendering on
+-- GitHub.
+vim.api.nvim_create_augroup('octo', { clear = true })
+vim.api.nvim_create_autocmd('BufEnter', {
+  group = 'octo',
+  pattern = 'octo://*',
+  callback = function()
+    print("Running this")
+    vim.cmd('setlocal textwidth=0')
+  end
+})
