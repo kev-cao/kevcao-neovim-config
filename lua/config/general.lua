@@ -124,7 +124,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
   group = 'octo',
   pattern = 'octo://*',
   callback = function()
-    print("Running this")
     vim.cmd('setlocal textwidth=0')
   end
 })
