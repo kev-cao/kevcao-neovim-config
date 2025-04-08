@@ -17,8 +17,6 @@ return {
       references = {
         provider = 'fzf_lua',
       },
-      focus_on_open = false,
-      dismiss_on_move = true,
     },
     keys = keymaps.goto_preview.keys,
     config = true,
