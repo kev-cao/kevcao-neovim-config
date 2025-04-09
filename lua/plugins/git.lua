@@ -1,3 +1,6 @@
+--- @module 'plugins.git'
+--- Git related plugins
+
 local func = require('util.func')
 local keymaps = require('config.keymaps')
 

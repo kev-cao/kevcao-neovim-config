@@ -1,3 +1,6 @@
+--- @module 'plugins.editor'
+--- All plugins that affect the editor.
+
 local func = require('util.func')
 local keymaps = require('config.keymaps')
 local config_opts = require('config.opts')

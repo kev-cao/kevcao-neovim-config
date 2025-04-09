@@ -1,3 +1,6 @@
+--- @module 'plugins.terminal'
+--- Terminal related plugins
+
 local func = require('util.func')
 local keymaps = require('config.keymaps')
 

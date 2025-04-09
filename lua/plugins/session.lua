@@ -1,4 +1,4 @@
---- @module 'config.session'
+--- @module 'plugins.session'
 --- All the session related plugins are defined here.
 
 local func = require('util.func')

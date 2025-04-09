@@ -1,4 +1,4 @@
---- @module 'config.cmp'
+--- @module 'plugins.cmp'
 --- All the completion related plugins are defined here.  
 
 local func = require('util.func')

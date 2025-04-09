@@ -1,3 +1,6 @@
+--- @module 'plugins.debugger'
+--- Debugger related plugins
+
 local func = require('util.func')
 local keymaps = require('config.keymaps')
 

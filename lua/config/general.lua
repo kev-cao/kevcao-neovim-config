@@ -35,6 +35,7 @@ vim.g.use_octo = true
 vim.g.use_marks = true
 vim.g.use_live_share = true
 vim.g.use_goto_preview = true
+vim.g.use_oil = true
 
 vim.g.nvim_tree_width = 30
 
