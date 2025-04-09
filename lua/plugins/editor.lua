@@ -30,6 +30,9 @@ return {
     cond = function()
       return func.check_global_var('use_live_share', true, true)
     end,
+    opts = {
+      service = 'serveo.net',
+    },
     config = function(_, opts)
       vim.g.instant_username = os.getenv('USER')
       require('live-share').setup(opts)
