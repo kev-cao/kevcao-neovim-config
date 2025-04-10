@@ -1049,7 +1049,7 @@ M.goto_preview = {
     {
       'gpd',
       function()
-        require('goto-preview').goto_preview_definition()
+        require('goto-preview').goto_preview_definition({})
       end,
       mode = 'n',
       desc = 'Goto definition with preview',
@@ -1057,7 +1057,7 @@ M.goto_preview = {
     {
       'gpt',
       function()
-        require('goto-preview').goto_preview_type_definition()
+        require('goto-preview').goto_preview_type_definition({})
       end,
       mode = 'n',
       desc = 'Goto type definition with preview',
@@ -1065,7 +1065,7 @@ M.goto_preview = {
     {
       'gpi',
       function()
-        require('goto-preview').goto_preview_implementation()
+        require('goto-preview').goto_preview_implementation({})
       end,
       mode = 'n',
       desc = 'Goto implementation with preview',

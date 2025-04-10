@@ -35,7 +35,6 @@ vim.g.use_octo = true
 vim.g.use_marks = true
 vim.g.use_live_share = true
 vim.g.use_goto_preview = true
-vim.g.use_oil = true
 
 vim.g.nvim_tree_width = 30
 
@@ -62,6 +61,7 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.ssop:append({ 'curdir' })
 vim.opt.ssop:remove('blank')
+vim.opt.conceallevel = 2
 
 
 vim.g.floaterm_wintype = 'split'

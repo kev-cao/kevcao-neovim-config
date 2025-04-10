@@ -19,7 +19,13 @@ return {
     'navarasu/onedark.nvim',
     lazy = false, -- load this during startup since it is our main plugin
     priority = 1000, -- make sure this is loaded before all other plugins
-    config = function()
+    opts = {
+      code_style = {
+        comments = 'none'
+      },
+    },
+    config = function(_, opts)
+      require('onedark').setup(opts)
       vim.cmd([[colorscheme onedark]])
     end
   },
@@ -142,12 +148,5 @@ return {
     cond = function()
       return func.check_global_var('use_noice', true, true)
     end
-  },
-  {
-    'echasnovski/mini.nvim',
-    version = '*',
-    config = function()
-      require('mini.pick').setup()
-    end,
   },
 }

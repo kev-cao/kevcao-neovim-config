@@ -34,11 +34,6 @@ return {
       'nvim-treesitter/nvim-treesitter',
     },
     opts = {
-      display = {
-        action_palette = {
-          provider = 'mini_pick',
-        }
-      },
       strategies = {
         chat = {
           adapter = 'copilot',

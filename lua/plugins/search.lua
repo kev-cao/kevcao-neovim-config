@@ -34,6 +34,7 @@ return {
     keys = keymaps.fzf.keys,
     config = function(_, opts)
       require('fzf-lua').setup(opts)
+      vim.cmd('FzfLua register_ui_select')
     end,
     cond = function()
       return func.check_global_var('use_fzf', true, true)
