@@ -19,19 +19,9 @@ return {
     opts = {
       picker = 'fzf-lua',
       mappings_disable_default = false,
-      mappings = keymaps.octo.mappings,
+      mappings = keymaps.octo.bufkeys,
     },
     config = function(_, opts)
-      -- Prevent Octo comments from auto-wrapping, which causes weird rendering on
-      -- GitHub.
-      vim.api.nvim_create_augroup('octo', { clear = true })
-      vim.api.nvim_create_autocmd('BufEnter', {
-        group = 'octo',
-        pattern = 'octo://*',
-        callback = function()
-          vim.cmd('setlocal textwidth=0')
-        end
-      })
       require('octo').setup(opts)
     end
   },
