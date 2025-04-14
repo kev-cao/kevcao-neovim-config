@@ -8,7 +8,7 @@ local M = {}
 
 M.groups = {
   { 'gp', group = 'Goto with preview', icon = { icon = '', color = 'green' } },
-  { '<leader>s', group = 'Search', cond = false },
+  { '<leader>s', group = 'Search' },
   { '<leader>g', group = 'Git', icon = { icon = '', color = 'green' } },
   {'<leader>d', group = 'Debugger', icon = { icon = '󰨰', color = 'blue' } },
   { '<leader><S-t>', group = 'Tests', icon = { icon = '', color = 'blue' } },
