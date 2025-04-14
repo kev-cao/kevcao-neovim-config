@@ -1096,6 +1096,30 @@ M.neorg = {
   },
   bufkeys = {
     {
+      '<C-d>',
+      '<Plug>(neorg.promo.demote)',
+      mode = 'i',
+      desc = 'Demote an object non-recursively',
+    },
+    {
+      '<C-t>',
+      '<Plug>(neorg.promo.promote)',
+      mode = 'i',
+      desc = 'Promote an object non-recursively',
+    },
+    {
+      '<M-CR>',
+      '<Plug>(neorg.itero.next-iteration)',
+      mode = 'i',
+      desc = 'Create an iteration of the current object',
+    },
+    {
+      '<M-d>',
+      '<Plug>(neorg.tempus.insert-date.insert-mode)',
+      mode = 'i',
+      desc = 'Insert a link to a date',
+    },
+    {
       '<,',
       '<Plug>(neorg.promo.demote)',
       mode = 'n',
