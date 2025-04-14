@@ -21,7 +21,7 @@ M.groups = {
   { '<leader>m<S-k>', group = 'Previous bookmark in group [0-9]', icon = { icon = '󰒮', color = 'green' }},
   { '<leader>l', group = 'LSP', icon = { icon = '', color = 'red' }},
   { '<leader>a', group = 'AI', icon = { icon = '󱚤', color = 'green' }},
-  { '<leader>S', group = 'Sessions', icon = { icon = '󰦖', color = 'green' } },
+  { '<leader>S', group = 'Sessions', icon = { icon = '󱫭', color = 'green' } },
 }
 
 -- General keymaps that should always be loaded

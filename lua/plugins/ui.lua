@@ -6,6 +6,44 @@ local keymaps = require('config.keymaps')
 
 return {
   {
+    'goolord/alpha-nvim',
+    dependencies = {
+      'echasnovski/mini.icons',
+      'junegunn/fzf',
+      'gennaro-tedesco/nvim-possession',
+    },
+    cond = function()
+      return func.check_global_var('use_alpha', true, true)
+    end,
+    config = function()
+      local alpha = require'alpha'
+      local dashboard = require'alpha.themes.dashboard'
+      dashboard.section.header.val = {
+        ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+        ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+        ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+        ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+        ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+        ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+      }
+      dashboard.section.header.opts.hl = 'AlphaHeader'
+      dashboard.section.buttons.val = {
+        dashboard.button('e', '   New file' , ':ene <BAR> startinsert <CR>'),
+        dashboard.button('<leader>sf', '󰱼   Search files' , ':FzfLua files<CR>'),
+        dashboard.button('<leader>sh', '󱋡   Recently opened files' , ':FzfLua oldfiles<CR>'),
+        dashboard.button('<leader>sm', '   View global marks' , ':FzfLua marks<CR>'),
+        dashboard.button('<leader>Sl', '󱫭   Open session', ':lua require("nvim-possession").list()<CR>'),
+        dashboard.button('q', '󰅚   Quit' , ':qa<CR>'),
+      }
+      dashboard.section.footer.val = require('alpha.fortune')()
+      local content_height = #dashboard.section.header.val + (#dashboard.section.buttons.val * 2 - 1) + 3
+      dashboard.opts.layout[1].val = vim.fn.floor((vim.fn.winheight(0) - content_height - 10) / 2)
+      dashboard.config.opts.noautocmd = true
+      vim.cmd[[autocmd User AlphaReady echo 'ready']]
+      alpha.setup(dashboard.config)
+    end
+  },
+  {
     'catgoose/nvim-colorizer.lua',
     event = 'BufReadPre',
     cond = function()
@@ -23,6 +61,10 @@ return {
       code_style = {
         comments = 'none'
       },
+      highlights = {
+        AlphaHeader = { fg = '#54ACE3' },
+        AlphaFooter = { fg = '#FF9E64' },
+      }
     },
     config = function(_, opts)
       require('onedark').setup(opts)

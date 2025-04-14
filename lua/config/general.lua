@@ -35,6 +35,7 @@ vim.g.use_octo = true
 vim.g.use_marks = true
 vim.g.use_live_share = true
 vim.g.use_goto_preview = true
+vim.g.use_alpha = true
 
 vim.g.nvim_tree_width = 30
 
@@ -96,11 +97,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   group = 'formatter',
   pattern = '*.go',
   callback = function(args)
-    -- args.file holds the current file name
-    local file = args.file
-    -- Build the command using the COCKROACH_ROOT environment variable and shellescape the file path.
-    local cmd = vim.env.COCKROACH_ROOT .. '/bin/crlfmt -w -tab=2 ' .. vim.fn.shellescape(file)
-    -- Execute the command silently (errors ignored)
+    local cmd = 'gofmt -w ' .. vim.fn.shellescape(args.file)
     os.execute(cmd)
     vim.cmd('edit')
   end,
