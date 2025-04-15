@@ -1098,8 +1098,16 @@ M.neorg = {
         require('util.neorg').prompt_create_file_in_ws()
       end,
       mode = 'n',
-      desc = 'Create new file in workspace',
-    }
+      desc = 'Create new file in current workspace',
+    },
+    {
+      '<leader>of',
+      function()
+        require('util.neorg').list_ws_files_fzf()
+      end,
+      mode = 'n',
+      desc = 'List files in current workspace',
+    },
   },
   bufgroups = {
     {

@@ -40,11 +40,7 @@ return {
           ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping(function (fallback)
             if cmp.visible() then
-              if has_luasnip and luasnip.expandable() then
-                luasnip.expand()
-              else
-                cmp.confirm({ select = true })
-              end
+              cmp.confirm({ select = true })
             else
               fallback()
             end
