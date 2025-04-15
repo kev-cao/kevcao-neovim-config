@@ -18,9 +18,12 @@ return {
     keys = keymaps.nvim_possession.keys,
     config = true,
     opts = {
+      fzf_winopts = {
+        title = '󱫭 Search Sessions'
+      },
       sessions = {
         sessions_path = vim.fn.stdpath('data') .. '/.sessions/',
-        sessions_icon = '󰦖 ',
+        sessions_icon = '󱫭 ',
       },
       autosave = true,
       autoload = true,
