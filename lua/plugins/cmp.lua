@@ -26,7 +26,6 @@ return {
           disabled = disabled or (vim.fn.reg_recording() ~= '')
           disabled = disabled or (vim.fn.reg_executing() ~= '')
           disabled = disabled or require('cmp.config.context').in_treesitter_capture('comment')
-          disabled = disabled or vim.api.nvim_get_option_value('filetype', { buf = 0 }) == 'norg'
           return not disabled
         end,
         snippet = {
@@ -76,7 +75,7 @@ return {
           { name = 'luasnip' },
           { name = 'lazydev' },
         }, {
-          { name = 'buffer' },
+          { name = '[Neorg]' },
         }),
       }
     end,

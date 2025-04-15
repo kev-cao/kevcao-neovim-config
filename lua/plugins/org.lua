@@ -1,11 +1,15 @@
 --- @module 'plugins.org'
 --- Orgmode plugin configuration
 
+local func = require('util.func')
+local keymaps = require('config.keymaps')
+
 return {
   {
     'nvim-neorg/neorg',
     lazy = false,
     version = '*',
+    cond = func.check_global_var('use_neorg', true, true),
     opts = {
       load = {
         ['core.defaults'] = {},
@@ -22,9 +26,15 @@ return {
           config = {
             default_keybinds = false,
           }
+        },
+        ['core.completion'] = {
+          config = {
+            engine = 'nvim-cmp',
+          }
         }
       },
     },
+    keys = keymaps.neorg.keys,
     config = function (_, opts)
       require('neorg').setup(opts)
     end,

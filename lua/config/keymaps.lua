@@ -22,6 +22,7 @@ M.groups = {
   { '<leader>l', group = 'LSP', icon = { icon = '', color = 'red' }},
   { '<leader>a', group = 'AI', icon = { icon = '󱚤', color = 'green' }},
   { '<leader>S', group = 'Sessions', icon = { icon = '󱫭', color = 'green' } },
+  { '<leader>o', group = 'OrgMode', icon = { icon = '', color = 'green' } }
 }
 
 -- General keymaps that should always be loaded
@@ -1082,6 +1083,24 @@ M.goto_preview = {
 }
 
 M.neorg = {
+  keys = {
+    {
+      '<leader>ow',
+      function()
+        require('util.neorg').list_ws_fzf()
+      end,
+      mode = 'n',
+      desc = 'List workspaces',
+    },
+    {
+      '<leader>on',
+      function()
+        require('util.neorg').prompt_create_file_in_ws()
+      end,
+      mode = 'n',
+      desc = 'Create new file in workspace',
+    }
+  },
   bufgroups = {
     {
       '<localleader>l',
