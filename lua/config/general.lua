@@ -56,8 +56,8 @@ vim.opt.cmdheight = 1
 vim.opt.updatetime = 750
 vim.opt.signcolumn = "yes"
 vim.opt.guicursor = "n-v-c-sm:block-blinkwait100-blinkoff20-blinkon20,"
-    .. "i-ci-ve:ver25-blinkwait100-blinkoff20-blinkon20,"
-    .. "r-cr-o:hor20-blinkwait100-blinkoff20-blinkon20"
+  .. "i-ci-ve:ver25-blinkwait100-blinkoff20-blinkon20,"
+  .. "r-cr-o:hor20-blinkwait100-blinkoff20-blinkon20"
 vim.opt.termguicolors = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
@@ -74,10 +74,10 @@ vim.g.vimtex_view_method = "zathura"
 vim.g.vimtex_view_general_viewer = "okular"
 vim.g.vimtex_view_general_options = "--unique file:@pdf\\#src:@line@tex"
 vim.g.vimtex_quickfix_ignore_filters = {
-    "Underfull",
-    "Overfull",
-    "does not make sense",
-    "Non standard sectioning",
+  "Underfull",
+  "Overfull",
+  "does not make sense",
+  "Non standard sectioning",
 }
 
 -- Create the Terminal command using the API.
@@ -94,28 +94,28 @@ vim.cmd("cabbrev term Terminal")
 --]]
 vim.api.nvim_create_augroup("formatter", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
-    group = "formatter",
-    pattern = "*.go",
-    callback = function(args)
-        local cmd = "crlfmt -w -tab=2 " .. vim.fn.shellescape(args.file)
-        vim.fn.jobstart(cmd, {
-            on_exit = function(_, code)
-                if code ~= 0 then
-                    return
-                end
-                vim.cmd("edit")
-            end,
-        })
-    end,
+  group = "formatter",
+  pattern = "*.go",
+  callback = function(args)
+    local cmd = "crlfmt -w -tab=2 " .. vim.fn.shellescape(args.file)
+    vim.fn.jobstart(cmd, {
+      on_exit = function(_, code)
+        if code ~= 0 then
+          return
+        end
+        vim.cmd("edit")
+      end,
+    })
+  end,
 })
 
 -- Don't clear the clipboard on exit
 vim.api.nvim_create_autocmd("VimLeave", {
-    pattern = "*",
-    callback = function()
-        local clip = vim.fn.getreg("+")
-        local esc = vim.fn.shellescape(clip)
-        local cmd = "echo " .. esc .. " | xclip -selection clipboard"
-        vim.fn.system(cmd)
-    end,
+  pattern = "*",
+  callback = function()
+    local clip = vim.fn.getreg("+")
+    local esc = vim.fn.shellescape(clip)
+    local cmd = "echo " .. esc .. " | xclip -selection clipboard"
+    vim.fn.system(cmd)
+  end,
 })

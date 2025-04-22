@@ -2,7 +2,7 @@
 --- This module configures the Clangd language server for C/C++ development in Neovim.
 
 return {
-    opts = {
-        filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
-    },
+  opts = {
+    filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+  },
 }
