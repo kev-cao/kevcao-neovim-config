@@ -36,10 +36,11 @@ vim.g.use_marks = true
 vim.g.use_live_share = true
 vim.g.use_goto_preview = true
 vim.g.use_alpha = true
+vim.g.use_neorg = true
 
 vim.g.nvim_tree_width = 30
 
-vim.opt.colorcolumn = { '80', '100' }
+vim.opt.colorcolumn = { "80", "100" }
 vim.opt.hlsearch = false
 vim.opt.relativenumber = true
 vim.opt.number = true
@@ -49,68 +50,72 @@ vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.textwidth = 80
-vim.opt.formatoptions = 'cqj'
+vim.opt.formatoptions = "cqj"
 vim.opt.ruler = true
 vim.opt.cmdheight = 1
 vim.opt.updatetime = 750
-vim.opt.signcolumn = 'yes'
-vim.opt.guicursor = "n-v-c-sm:block-blinkwait100-blinkoff20-blinkon20," ..
-    "i-ci-ve:ver25-blinkwait100-blinkoff20-blinkon20," ..
-    "r-cr-o:hor20-blinkwait100-blinkoff20-blinkon20"
+vim.opt.signcolumn = "yes"
+vim.opt.guicursor = "n-v-c-sm:block-blinkwait100-blinkoff20-blinkon20,"
+    .. "i-ci-ve:ver25-blinkwait100-blinkoff20-blinkon20,"
+    .. "r-cr-o:hor20-blinkwait100-blinkoff20-blinkon20"
 vim.opt.termguicolors = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.ssop:append({ 'curdir' })
-vim.opt.ssop:remove('blank')
+vim.opt.ssop:append({ "curdir" })
+vim.opt.ssop:remove("blank")
 vim.opt.conceallevel = 2
 
-
-vim.g.floaterm_wintype = 'split'
-vim.g.floaterm_position = 'botright'
+vim.g.floaterm_wintype = "split"
+vim.g.floaterm_position = "botright"
 vim.g.floaterm_width = 0.2
 
-vim.g.tex_flavor = 'latex'
-vim.g.vimtex_view_method = 'zathura'
-vim.g.vimtex_view_general_viewer = 'okular'
-vim.g.vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'
+vim.g.tex_flavor = "latex"
+vim.g.vimtex_view_method = "zathura"
+vim.g.vimtex_view_general_viewer = "okular"
+vim.g.vimtex_view_general_options = "--unique file:@pdf\\#src:@line@tex"
 vim.g.vimtex_quickfix_ignore_filters = {
-  'Underfull',
-  'Overfull',
-  'does not make sense',
-  'Non standard sectioning'
+    "Underfull",
+    "Overfull",
+    "does not make sense",
+    "Non standard sectioning",
 }
 
 -- Create the Terminal command using the API.
-vim.api.nvim_create_user_command('Terminal', 'botright vs | term', {})
+vim.api.nvim_create_user_command("Terminal", "botright vs | term", {})
 
 -- Set up command-line abbreviations.
-vim.cmd('cabbrev terminal Terminal')
-vim.cmd('cabbrev term Terminal')
+vim.cmd("cabbrev terminal Terminal")
+vim.cmd("cabbrev term Terminal")
 
 --[[
 -- ==========================================================
 -- ==================== Auto Commands =======================
 -- ==========================================================
 --]]
-vim.api.nvim_create_augroup('formatter', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', {
-  group = 'formatter',
-  pattern = '*.go',
-  callback = function(args)
-    local cmd = 'gofmt -w ' .. vim.fn.shellescape(args.file)
-    os.execute(cmd)
-    vim.cmd('edit')
-  end,
+vim.api.nvim_create_augroup("formatter", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+    group = "formatter",
+    pattern = "*.go",
+    callback = function(args)
+        local cmd = "crlfmt -w -tab=2 " .. vim.fn.shellescape(args.file)
+        vim.fn.jobstart(cmd, {
+            on_exit = function(_, code)
+                if code ~= 0 then
+                    return
+                end
+                vim.cmd("edit")
+            end,
+        })
+    end,
 })
 
 -- Don't clear the clipboard on exit
-vim.api.nvim_create_autocmd('VimLeave', {
-  pattern = '*',
-  callback = function()
-    local clip = vim.fn.getreg('+')
-    local esc = vim.fn.shellescape(clip)
-    local cmd = 'echo ' .. esc .. ' | xclip -selection clipboard'
-    vim.fn.system(cmd)
-  end,
+vim.api.nvim_create_autocmd("VimLeave", {
+    pattern = "*",
+    callback = function()
+        local clip = vim.fn.getreg("+")
+        local esc = vim.fn.shellescape(clip)
+        local cmd = "echo " .. esc .. " | xclip -selection clipboard"
+        vim.fn.system(cmd)
+    end,
 })
-
