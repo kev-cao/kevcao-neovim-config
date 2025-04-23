@@ -152,9 +152,15 @@ M.fzf = {
     },
     {
       "<leader>sr",
-      "<cmd>FzfLua grep_project<CR>",
+      "<cmd>FzfLua live_grep_glob<CR>",
       mode = "n",
-      desc = "Search in project files",
+      desc = "Live search in project",
+    },
+    {
+      "<leader>sp",
+      "<cmd>FzfLua live_grep_resume<CR>",
+      mode = "n",
+      desc = "Resume previous live search",
     },
     {
       "<leader>sd",
