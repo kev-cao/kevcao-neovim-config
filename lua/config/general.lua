@@ -22,7 +22,6 @@ vim.g.use_which_key = true
 vim.g.use_smooth_scroll = true
 vim.g.use_nvim_test = true
 vim.g.use_noice = true
-vim.g.use_minipick = true
 vim.g.use_nvim_possession = true
 vim.g.use_mini_surround = true
 vim.g.use_neoclip = true
