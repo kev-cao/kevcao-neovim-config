@@ -7,6 +7,41 @@ local config_opts = require("config.opts")
 
 return {
   {
+    "mhartington/formatter.nvim",
+    cond = function()
+      return func.check_global_var("use_formatter", true, true)
+    end,
+    opts = function()
+      return {
+        filetype = {
+          typescript = {
+            require("formatter.filetypes.typescript").prettier,
+          },
+          javascript = {
+            require("formatter.filetypes.javascript").prettier,
+          },
+          typescriptreact = {
+            require("formatter.filetypes.typescriptreact").prettier,
+          },
+          javascriptreact = {
+            require("formatter.filetypes.javascriptreact").prettier,
+          },
+          go = {
+            function()
+              return {
+                exe = "gofmt",
+                stdin = true,
+              }
+            end
+          },
+          ["*"] = {
+            require("formatter.filetypes.any").remove_trailing_whitespace,
+          },
+        }
+      }
+    end,
+  },
+  {
     "rmagatti/goto-preview",
     event = "BufEnter",
     dependencies = {

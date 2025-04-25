@@ -1088,34 +1088,6 @@ M.goto_preview = {
 }
 
 M.neorg = {
-  --[[
-  keys = {
-    {
-      '<leader>ow',
-      function()
-        require('util.neorg').list_ws_fzf()
-      end,
-      mode = 'n',
-      desc = 'List workspaces',
-    },
-    {
-      '<leader>on',
-      function()
-        require('util.neorg').prompt_create_file_in_ws()
-      end,
-      mode = 'n',
-      desc = 'Create new file in current workspace',
-    },
-    {
-      '<leader>of',
-      function()
-        require('util.neorg').list_ws_files_fzf()
-      end,
-      mode = 'n',
-      desc = 'List files in current workspace',
-    },
-  },
-  --]]
   bufgroups = {
     {
       "<localleader>l",

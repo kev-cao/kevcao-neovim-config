@@ -6,6 +6,16 @@ local keymaps = require("config.keymaps")
 
 return {
   {
+    "pmizio/typescript-tools.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    cond = function()
+      return func.check_global_var("use_lsp", true, true)
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     event = { "BufRead", "BufWinEnter", "BufNewFile" },
     dependencies = {

@@ -36,6 +36,7 @@ vim.g.use_live_share = true
 vim.g.use_goto_preview = true
 vim.g.use_alpha = true
 vim.g.use_neorg = true
+vim.g.use_formatter = true
 
 vim.g.nvim_tree_width = 30
 
@@ -91,20 +92,15 @@ vim.cmd("cabbrev term Terminal")
 -- ==================== Auto Commands =======================
 -- ==========================================================
 --]]
+local func = require("util.func")
 vim.api.nvim_create_augroup("formatter", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = "formatter",
-  pattern = "*.go",
-  callback = function(args)
-    local cmd = "crlfmt -w -tab=2 " .. vim.fn.shellescape(args.file)
-    vim.fn.jobstart(cmd, {
-      on_exit = function(_, code)
-        if code ~= 0 then
-          return
-        end
-        vim.cmd("edit")
-      end,
-    })
+  pattern = "*",
+  callback = function()
+    if func.check_global_var("use_formatter", true, false) then
+      vim.cmd("FormatWrite")
+    end
   end,
 })
 
