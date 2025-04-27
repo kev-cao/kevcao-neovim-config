@@ -14,6 +14,9 @@ return {
     cond = function()
       return func.check_global_var("use_lsp", true, true)
     end,
+    config = function(_, opts)
+      require("typescript-tools").setup(opts)
+    end,
   },
   {
     "neovim/nvim-lspconfig",
