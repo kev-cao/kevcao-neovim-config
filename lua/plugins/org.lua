@@ -44,7 +44,7 @@ return {
         ["external.conceal-wrap"] = {},
         ["external.integrations.fzf-lua"] = {
           config = {
-            workspace_location = "~/norg-mode",
+            workspace_location = "~/org-mode",
           },
         },
       },

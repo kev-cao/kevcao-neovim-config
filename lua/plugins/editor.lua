@@ -29,8 +29,8 @@ return {
           go = {
             function()
               return {
-                exe = "gofmt",
-                stdin = true,
+                exe = "crlfmt",
+                args = { "-w", "-tab=2" },
               }
             end
           },
