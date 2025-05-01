@@ -1,7 +1,7 @@
 local func = require("util.func")
 local keymaps = require("config.keymaps")
 
-vim.cmd("setlocal textwidth=0")
+vim.cmd("setlocal textwidth=100")
 
 if func.check_global_var("use_which_key", true, false) then
   local wk = require("which-key")

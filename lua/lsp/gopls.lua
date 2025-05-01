@@ -29,7 +29,7 @@ return {
         end
       end
       if mod_cache and fname:sub(1, #mod_cache) == mod_cache then
-        local clients = util.get_lsp_clients({ name = "gopls" })
+        local clients = vim.lsp.get_clients({ name = "gopls" })
         if #clients > 0 then
           return clients[#clients].config.root_dir
         end

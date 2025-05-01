@@ -13,6 +13,8 @@ vim.api.nvim_set_hl(0, "@lsp.type.namespace.go", { link = "goPackageName" })
 vim.api.nvim_set_hl(0, "@lsp.typemod.type.interface.go", { fg = "#7BE5C0", ctermfg = 86 })
 vim.api.nvim_set_hl(0, "@lsp.typemod.variable.readonly.go", { link = "goConstDeclGroup" })
 
+vim.api.nvim_set_hl(0, "@variable.parameter", { link = "goFuncParam" })
+
 -- General colors
 vim.api.nvim_set_hl(0, "Search", { bg = "#75819c", ctermbg = 67, fg = "#FFFFFF" })
 vim.api.nvim_set_hl(0, "CurSearch", { bg = "#75819c", ctermbg = 67, fg = "#000000" })

@@ -7,6 +7,10 @@ local keymaps = require("config.keymaps")
 return {
   {
     "nvim-neorg/neorg",
+    dependencies = {
+      "kev-cao/neorg-fzflua",
+      "benlubas/neorg-conceal-wrap",
+    },
     lazy = false,
     version = "*",
     cond = func.check_global_var("use_neorg", true, true),
@@ -32,15 +36,18 @@ return {
             engine = "nvim-cmp",
           },
         },
+        ["core.export"] = {
+          config = {
+            export_dir = "~/org-mode/exports",
+          },
+        },
+        ["external.conceal-wrap"] = {},
         ["external.integrations.fzf-lua"] = {
           config = {
             workspace_location = "~/norg-mode",
           },
         },
       },
-    },
-    dependencies = {
-      "kev-cao/neorg-fzflua",
     },
     keys = keymaps.neorg.keys,
     config = function(_, opts)
