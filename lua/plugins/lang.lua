@@ -62,6 +62,23 @@ return {
           })
         end
       end
+      for server_name, server in pairs(opts.servers) do
+        local server_on_attach = function(client, bufnr)
+          on_attach(client, bufnr)
+          if server.on_attach then
+            server.on_attach(client, bufnr)
+          end
+        end
+        local server_opts = vim.tbl_deep_extend("force", {
+          capabilities = capabilities,
+          handlers = {
+            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+              border = "rounded",
+            }),
+          },
+        }, server, { on_attach = server_on_attach })
+        vim.lsp.config(server_name, server_opts)
+      end
       require("mason").setup({
         ui = {
           icons = {
@@ -71,26 +88,8 @@ return {
           },
         },
       })
-      require("mason-lspconfig").setup()
-      require("mason-lspconfig").setup_handlers({
-        function(server_name)
-          local server = opts.servers[server_name]
-          local server_on_attach = function(client, bufnr)
-            on_attach(client, bufnr)
-            if server and server.on_attach then
-              server.on_attach(client, bufnr)
-            end
-          end
-          local server_opts = vim.tbl_deep_extend("force", {
-            capabilities = vim.deepcopy(capabilities),
-            handlers = {
-              ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-                border = "rounded",
-              }),
-            },
-          }, server or {}, { on_attach = server_on_attach })
-          require("lspconfig")[server_name].setup(server_opts)
-        end,
+      require("mason-lspconfig").setup({
+        ensure_installed = vim.tbl_keys(opts.servers),
       })
     end,
     keys = keymaps.lsp.keys,
@@ -99,10 +98,10 @@ return {
     end,
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     lazy = false,
     dependencies = {
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
     cond = function()

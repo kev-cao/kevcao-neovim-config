@@ -22,7 +22,6 @@ return {
           config = {
             workspaces = {
               notes = "~/org-mode/notes",
-              todos = "~/org-mode/todos",
             },
           },
         },
