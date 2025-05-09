@@ -79,10 +79,14 @@ return {
           },
           go = {
             function()
-              return {
-                exe = "crlfmt",
-                args = { "-w", "-tab=2" },
-              }
+              if vim.fn.executable("crlfmt") == 1 then
+                return {
+                  exe = "crlfmt",
+                  args = { "-w", "-tab=2" },
+                }
+              else
+                return require("formatter.filetypes.go").gofmt()
+              end
             end
           },
           ["*"] = {
