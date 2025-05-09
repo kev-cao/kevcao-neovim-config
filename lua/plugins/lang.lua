@@ -90,6 +90,7 @@ return {
       })
       require("mason-lspconfig").setup({
         ensure_installed = vim.tbl_keys(opts.servers),
+        automatic_enable = true,
       })
     end,
     keys = keymaps.lsp.keys,

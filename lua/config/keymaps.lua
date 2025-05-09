@@ -1257,6 +1257,12 @@ M.neorg = {
       mode = "v",
       desc = "Promote objects in range",
     },
+    {
+      "<localleader>h",
+      "<cmd>Neorg toc<CR>",
+      mode = "n",
+      desc = "Create a table of contents",
+    }
   },
 }
 
