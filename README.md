@@ -1,5 +1,6 @@
 ## Dependencies
 
+- nvim 0.11+
 - A lot of plugins required [patched fonts](https://www.nerdfonts.com/), so install them.
 - nvim-dap-go
     - delve
