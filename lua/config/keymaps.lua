@@ -282,13 +282,13 @@ M.lsp = {
       desc = "Rename reference",
     },
     {
-      "<C-k>",
+      "<M-k>",
       "<cmd>lua vim.lsp.buf.hover()<CR>",
       mode = "n",
       desc = "Show documentation",
     },
     {
-      "<C-k>",
+      "<M-k>",
       "<cmd>lua vim.lsp.buf.signature_help()<CR>",
       mode = "i",
       desc = "Show signature",

@@ -30,7 +30,7 @@ return {
         },
         completeUnimported = true,
         deepCompletion = true,
-        usePlaceholders = true,
+        usePlaceholders = false,
         analyses = {
           unusedparams = true,
         },
