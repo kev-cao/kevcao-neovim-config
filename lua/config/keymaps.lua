@@ -503,6 +503,23 @@ M.code_companion = {
   },
 }
 
+M.aider = {
+  keys = {
+    {
+      "<leader>ao",
+      "<cmd>AiderOpen<CR>",
+      mode = { "n" },
+      desc = "Open Aider",
+    },
+    {
+      "<leader>am",
+      "<cmd>AiderAddModifiedFiles<CR>",
+      mode = { "n" },
+      desc = "Add modified files to Aider",
+    }
+  },
+}
+
 M.nvim_possession = {
   keys = {
     {
