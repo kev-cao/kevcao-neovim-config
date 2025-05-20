@@ -39,7 +39,6 @@ return {
       local content_height = #dashboard.section.header.val + (#dashboard.section.buttons.val * 2 - 1) + 3
       dashboard.opts.layout[1].val = vim.fn.floor((vim.fn.winheight(0) - content_height - 10) / 2)
       dashboard.config.opts.noautocmd = true
-      vim.cmd([[autocmd User AlphaReady]])
       alpha.setup(dashboard.config)
     end,
   },
@@ -89,15 +88,7 @@ return {
         lualine_b = { "branch", "diff", "diagnostics" },
         lualine_c = { "filename" },
         lualine_x = {
-          {
-            function()
-              return require("noice").api.status.command.get()
-            end,
-            cond = function()
-              return require("noice").api.status.command.has()
-            end,
-            color = { fg = "#ff9e64" },
-          },
+          { "mode", color = { fg = "#ff9e64" } },
           "filetype",
         },
         lualine_y = {
