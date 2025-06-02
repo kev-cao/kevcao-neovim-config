@@ -64,10 +64,12 @@ return {
       end
       for server_name, server in pairs(opts.servers) do
         local server_on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
           if server.on_attach then
-            server.on_attach(client, bufnr)
+            if not server.on_attach(client, bufnr) then
+              return
+            end
           end
+          on_attach(client, bufnr)
         end
         local server_opts = vim.tbl_deep_extend("force", {
           capabilities = capabilities,

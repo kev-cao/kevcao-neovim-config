@@ -3,7 +3,12 @@
 
 return {
   opts = {
-    on_attach = function(client, _)
+    on_attach = function(client, bufnr)
+      local uri = vim.uri_from_bufnr(bufnr)
+      if vim.startswith(uri, "octo://") then
+        vim.lsp.buf_detach_client(bufnr, client.id)
+        return false
+      end
       if not client.server_capabilities.semanticTokensProvider then
         local semantic = client.config.capabilities.textDocument.semanticTokens
         client.server_capabilities.semanticTokensProvider = {
