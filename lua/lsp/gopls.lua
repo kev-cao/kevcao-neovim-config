@@ -37,7 +37,11 @@ return {
         deepCompletion = true,
         usePlaceholders = false,
         analyses = {
+          SA4006 = true,
           unusedparams = true,
+          nilness = true,
+          unusedwrite = true,
+          unusedvariable = true,
         },
       },
     },
