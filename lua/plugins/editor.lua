@@ -89,6 +89,9 @@ return {
               end
             end
           },
+          terraform = {
+            require("formatter.filetypes.terraform").tofufmt,
+          },
           ["*"] = {
             require("formatter.filetypes.any").remove_trailing_whitespace,
           },
