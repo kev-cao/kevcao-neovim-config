@@ -663,7 +663,7 @@ M.lazygit = {
     {
       "<leader>gg",
       "<cmd>LazyGit<CR>",
-      mode = "n",
+      mode = { "n", "t" },
       desc = "Open LazyGit",
     },
   },
