@@ -101,7 +101,7 @@ M.general = {
       mode = "n",
     },
     {
-      "<S-q>",
+      "<M-q>",
       "q",
       hidden = true,
       mode = "n",
