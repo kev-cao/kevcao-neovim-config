@@ -116,3 +116,10 @@ vim.api.nvim_create_autocmd("VimLeave", {
     vim.fn.system(cmd)
   end,
 })
+
+vim.api.nvim_create_autocmd("TermClose", {
+  pattern = "*",
+  callback = function(ev)
+    vim.api.nvim_buf_delete(ev.buf, {})
+  end
+})
