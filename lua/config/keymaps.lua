@@ -93,6 +93,19 @@ M.general = {
       hidden = true,
       mode = "n",
     },
+    -- Rebind macro recording to <S-q> to avoid accidentally recording macros
+    {
+      "q",
+      "<nop>",
+      hidden = true,
+      mode = "n",
+    },
+    {
+      "<S-q>",
+      "q",
+      hidden = true,
+      mode = "n",
+    },
     --[[
     -- Removing this as it makes using LazyGit annoying.
     -- ]
