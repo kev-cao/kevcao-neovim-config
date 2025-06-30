@@ -8,6 +8,9 @@ return {
   {
     "ibhagwan/fzf-lua",
     opts = {
+      keymap = {
+        fzf = keymaps.fzf.fzfkeys,
+      },
       marks = {
         marks = "[A-Za-z]",
       },

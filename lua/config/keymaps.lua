@@ -202,6 +202,10 @@ M.fzf = {
       desc = "List git branches",
     },
   },
+  fzfkeys = {
+    ["tab"] = "down",
+    ["shift-tab"] = "up",
+  },
 }
 
 M.floaterm = {
