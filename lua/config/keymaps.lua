@@ -117,28 +117,9 @@ M.general = {
     },
     --]]
     {
-      "<C-w>k",
-      "<cmd>wincmd k<CR>",
+      "<C-w>",
+      "<C-\\><C-n><C-w>",
       mode = "t",
-      desc = "Switch to above window",
-    },
-    {
-      "<C-w>j",
-      "<cmd>wincmd j<CR>",
-      mode = "t",
-      desc = "Switch to below window",
-    },
-    {
-      "<C-w>l",
-      "<cmd>wincmd l<CR>",
-      mode = "t",
-      desc = "Switch to right window",
-    },
-    {
-      "<C-w>h",
-      "<cmd>wincmd h<CR>",
-      mode = "t",
-      desc = "Switch to left window",
     },
   },
 }
