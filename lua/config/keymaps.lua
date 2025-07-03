@@ -1281,4 +1281,15 @@ M.neorg = {
   },
 }
 
+M.winshift = {
+  keys = {
+    {
+      "<C-w>m",
+      "<cmd>WinShift<CR>",
+      mode = { "n", "t", "x" },
+      desc = "Enter window move mode",
+    }
+  }
+}
+
 return M

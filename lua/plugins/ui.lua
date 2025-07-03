@@ -6,6 +6,10 @@ local keymaps = require("config.keymaps")
 
 return {
   {
+    "sindrets/winshift.nvim",
+    keys = keymaps.winshift.keys,
+  },
+  {
     "goolord/alpha-nvim",
     dependencies = {
       "echasnovski/mini.icons",
