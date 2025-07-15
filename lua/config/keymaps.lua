@@ -93,7 +93,7 @@ M.general = {
       hidden = true,
       mode = "n",
     },
-    -- Rebind macro recording to <S-q> to avoid accidentally recording macros
+    -- Rebind macro recording to <M-q> to avoid accidentally recording macros
     {
       "q",
       "<nop>",
