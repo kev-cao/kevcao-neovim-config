@@ -14,6 +14,7 @@ M.groups = {
   { "<leader><S-t>", group = "Tests", icon = { icon = "", color = "blue" } },
   { "<leader>t", group = "Terminal" },
   { "<leader>m", group = "Marks", icon = { icon = "", color = "yellow" } },
+  { "<localleader>m", group = "Marks", icon = { icon = "", color = "yellow" } },
   { "<leader>mb", group = "Bookmarks", icon = { icon = "", color = "purple" } },
   { "<leader>mbl", group = "List bookmarks in group [0-9]", icon = { icon = "", color = "blue" } },
   { "<leader>mb<C-d>", group = "Delete all bookmarks in group [0-9]", icon = { icon = "󰛌", color = "red" } },
@@ -157,7 +158,7 @@ M.fzf = {
       desc = "Resume previous live search",
     },
     {
-      "<leader>sd",
+      "<localleader>s",
       "<cmd>FzfLua blines<CR>",
       mode = "n",
       desc = "Search in current buffer",
@@ -292,25 +293,25 @@ M.lsp = {
       desc = "Show signature",
     },
     {
-      "<leader>ld",
+      "<localleader>d",
       "<cmd>FzfLua diagnostics_document<CR>",
       mode = "n",
       desc = "Show buffer diagnostics",
     },
     {
-      "<leader>l<S-d>",
+      "<leader>ld",
       "<cmd>FzfLua diagnostics_workspace<CR>",
       mode = "n",
       desc = "Show workspace diagnostics",
     },
     {
-      "<leader>lj",
+      "<localleader>j",
       "<cmd>lua vim.diagnostic.goto_next()<CR>",
       mode = "n",
       desc = "Next diagnostic",
     },
     {
-      "<leader>lk",
+      "<localleader>k",
       "<cmd>lua vim.diagnostic.goto_prev()<CR>",
       mode = "n",
       desc = "Previous diagnostic",
@@ -328,7 +329,7 @@ M.lsp = {
       desc = "Live workspace symbols",
     },
     {
-      "<leader>ls",
+      "<localleader><S-s>",
       "<cmd>FzfLua treesitter<CR>",
       mode = "n",
       desc = "List buffer symbols",
@@ -879,7 +880,7 @@ M.octo = {
 M.marks = {
   keys = {
     {
-      "<leader>ml",
+      "<localleader>mm",
       function()
         vim.cmd("MarksListBuf")
         vim.cmd("lclose")
@@ -939,7 +940,7 @@ M.marks = {
       desc = "Delete all marks under cursor",
     },
     {
-      "<leader>m<C-d>",
+      "<localleader>m<S-d>",
       "<Plug>(Marks-deletebuf)",
       mode = "n",
       desc = "Delete marks in buffer",
