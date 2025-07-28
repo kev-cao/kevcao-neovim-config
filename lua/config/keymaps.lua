@@ -147,7 +147,7 @@ M.fzf = {
     },
     {
       "<leader>sr",
-      "<cmd>FzfLua live_grep_glob<CR>",
+      "<cmd>FzfLua live_grep<CR>",
       mode = "n",
       desc = "Live search in project",
     },
