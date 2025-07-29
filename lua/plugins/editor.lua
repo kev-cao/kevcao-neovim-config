@@ -209,6 +209,13 @@ return {
         if opts.keywords[key].alt == nil then
           opts.keywords[key].alt = {}
         end
+
+        local oldAlt = vim.tbl_values(opts.keywords[key].alt)
+        for _, alt in pairs(oldAlt) do
+          table.insert(opts.keywords[key].alt, alt:lower())
+          table.insert(opts.keywords[key].alt, alt:capitalize())
+        end
+
         table.insert(opts.keywords[key].alt, key:lower())
         table.insert(opts.keywords[key].alt, key:capitalize())
       end
