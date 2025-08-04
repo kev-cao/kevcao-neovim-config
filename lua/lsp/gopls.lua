@@ -17,6 +17,7 @@ return {
           range = true,
         }
       end
+      return true
     end,
     cmd = { "gopls" },
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
