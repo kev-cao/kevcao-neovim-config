@@ -153,7 +153,7 @@ M.fzf = {
     },
     {
       "<leader>sp",
-      "<cmd>FzfLua live_grep_resume<CR>",
+      "<cmd>FzfLua live_grep resume=true<CR>",
       mode = "n",
       desc = "Resume previous live search",
     },
