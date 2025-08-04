@@ -70,4 +70,14 @@ return {
       return func.check_global_var("use_codecompanion", true, true)
     end,
   },
+  {
+    "greggh/claude-code.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- Required for git operations
+    },
+    keys = keymaps.claude.keys,
+    config = function()
+      require("claude-code").setup()
+    end
+  },
 }

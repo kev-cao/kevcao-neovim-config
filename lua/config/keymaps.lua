@@ -1293,4 +1293,15 @@ M.winshift = {
   }
 }
 
+M.claude = {
+  keys = {
+    {
+      "<leader>ac",
+      "<cmd>ClaudeCode<CR>",
+      mode = "n",
+      desc = "Toggle Claude Code",
+    }
+  }
+}
+
 return M

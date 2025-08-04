@@ -26,3 +26,5 @@
     - lazygit cli program
 - octo
     - [Github CLI](https://cli.github.com/)
+- claude code
+    - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code/setup)
