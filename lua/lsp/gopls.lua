@@ -38,11 +38,12 @@ return {
         deepCompletion = true,
         usePlaceholders = false,
         analyses = {
-          SA4006 = true,
+          shadow = true,
           unusedparams = true,
           nilness = true,
           unusedwrite = true,
           unusedvariable = true,
+          SA4006 = true,
         },
       },
     },

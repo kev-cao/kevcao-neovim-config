@@ -76,8 +76,14 @@ return {
       "nvim-lua/plenary.nvim", -- Required for git operations
     },
     keys = keymaps.claude.keys,
-    config = function()
-      require("claude-code").setup()
+    opts = {
+      command = "NODENV_VERSION=23.9.0 claude",
+    },
+    cond = function()
+      return func.check_global_var("use_claude", true, true)
+    end,
+    config = function(_, opts)
+      require("claude-code").setup(opts)
     end
   },
 }

@@ -82,7 +82,7 @@ return {
               if vim.fn.executable("crlfmt") == 1 then
                 return {
                   exe = "crlfmt",
-                  args = { "-w", "-tab=2" },
+                  args = { "-w", "-tab=2", "-wrap=100", "-ignore '.(pb(.gw)?)|(\\.[eo]g)\\.go|/testdata/|^sql/parser/sql\\.go$|_generated(_test)?\\.go$'" },
                 }
               else
                 return require("formatter.filetypes.go").gofmt()
