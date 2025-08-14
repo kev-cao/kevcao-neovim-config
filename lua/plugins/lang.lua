@@ -42,6 +42,10 @@ return {
         opts.capabilities or {}
       )
       local function on_attach(client, bufnr)
+        if client == nil then
+          return
+        end
+
         if client.server_capabilities.documentHighlightProvider then
           vim.api.nvim_create_augroup("lsp_hover", { clear = false })
           vim.api.nvim_clear_autocmds({ buffer = bufnr, group = "lsp_hover" })

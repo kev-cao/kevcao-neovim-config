@@ -491,6 +491,71 @@ M.test = {
   },
 }
 
+M.neotest = {
+  keys = {
+    {
+      "<leader><S-t>s",
+      function()
+        require("neotest").run.run({ suite = true })
+      end,
+      mode = "n",
+      desc = "Run test suite",
+    },
+    {
+      "<leader><S-t>f",
+      function()
+        require("neotest").run.run(vim.fn.expand("%"))
+      end,
+      mode = "n",
+      desc = "Run test file",
+    },
+    {
+      "<leader><S-t>t",
+      function()
+        require("neotest").run.run()
+      end,
+      mode = "n",
+      desc = "Run nearest test",
+    },
+    {
+      "<leader><S-t>l",
+      function()
+        require("neotest").run.run_last()
+      end,
+      mode = "n",
+      desc = "Run last test",
+    },
+    {
+      "<leader><S-t>o",
+      function()
+        require("neotest").output_panel.toggle()
+        require("neotest").summary.toggle()
+      end,
+      mode = "n",
+      desc = "Toggle test output",
+    },
+  },
+  ["output-panel"] = {
+    {
+      "q",
+      function()
+        require("neotest").output_panel.close()
+        require("neotest").summary.close()
+      end,
+      mode = { "n", "t" },
+      desc = "Close test output panel",
+    },
+    {
+      "<localleader>c",
+      function()
+        require("neotest").output_panel.clear()
+      end,
+      mode = { "n", "t" },
+      desc = "Clear test output panel",
+    },
+  }
+}
+
 M.code_companion = {
   keys = {
     {

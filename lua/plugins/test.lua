@@ -23,4 +23,39 @@ return {
       return func.check_global_var("use_nvim_test", true, true)
     end,
   },
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "fredrikaverpil/neotest-golang",
+    },
+    cond = function()
+      return func.check_global_var("use_neotest", true, true)
+    end,
+    keys = keymaps.neotest.keys,
+    opts = {
+      adapters = {
+        ["neotest-golang"] = {
+          go_test_args = {"-v"},
+        },
+      },
+      discovery = {
+        enabled = false,
+      },
+      output_panel = {
+        open = "botright split | resize 12"
+      },
+    },
+    config = function(_, opts)
+      local adapters = {}
+      for name, adapterOpts in pairs(opts.adapters) do
+        table.insert(adapters, require(name)(adapterOpts))
+      end
+      opts.adapters = adapters
+      require("neotest").setup(opts)
+    end
+  }
 }
