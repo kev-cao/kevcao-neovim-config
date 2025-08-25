@@ -66,6 +66,12 @@ return {
           })
         end
       end
+
+      vim.lsp.config("*", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+
       for server_name, server in pairs(opts.servers) do
         local server_on_attach = function(client, bufnr)
           if server.on_attach then
