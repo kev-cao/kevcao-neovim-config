@@ -4,10 +4,16 @@
 return {
   opts = {
     on_attach = function(client, bufnr)
-      local uri = vim.uri_from_bufnr(bufnr)
-      if vim.startswith(uri, "octo://") then
-        vim.lsp.buf_detach_client(bufnr, client.id)
+      if not client then
         return false
+      end
+
+      local uri = vim.uri_from_bufnr(bufnr)
+      local invalid_schemes = { "octo://", "fugitive://" }
+      for _, scheme in ipairs(invalid_schemes) do
+        if vim.startswith(uri, scheme) then
+          return
+        end
       end
       if not client.server_capabilities.semanticTokensProvider then
         local semantic = client.config.capabilities.textDocument.semanticTokens
@@ -38,7 +44,6 @@ return {
         deepCompletion = true,
         usePlaceholders = false,
         analyses = {
-          shadow = true,
           unusedparams = true,
           nilness = true,
           unusedwrite = true,

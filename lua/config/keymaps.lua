@@ -401,17 +401,17 @@ M.dap = {
       mode = "n",
       desc = "[Debugger] Terminate",
     },
-    -- Since I'm always going to be using dap-ui with dap, I'm going to include
-    -- dap-ui keymaps in the dap keymaps.
+    -- Since I'm always going to be using dap-view with dap, I'm going to include
+    -- dap-view keymaps in the dap keymaps.
     {
       "<leader>du",
-      "<cmd>lua require('dapui').toggle()<CR>",
+      "<cmd>DapViewToggle<CR>",
       mode = "n",
       desc = "Toggle dap-ui",
     },
     {
-      "<leader>de",
-      "<cmd>lua require('dapui').eval(vim.fn.input(\"Evaluate expression: \"))<CR>",
+      "<leader>dw",
+      "<cmd>DapViewWatch<CR>",
       mode = "n",
       desc = "Evaluate expression",
     },

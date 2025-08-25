@@ -6,17 +6,27 @@ local keymaps = require("config.keymaps")
 
 return {
   {
-    "rcarriga/nvim-dap-ui",
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    "igorlfs/nvim-dap-view",
     keys = keymaps.dap.keys,
-    config = function()
-      local dap, dapui = require("dap"), require("dapui")
-      dapui.setup()
+    opts = {
+      winbar = {
+        sections = {
+          "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", "console",
+        },
+        default_section = "scopes",
+        controls = {
+          enabled = true,
+        }
+      },
+    },
+    config = function(_, opts)
+      local dap, dapview = require("dap"), require("dap-view")
+      dapview.setup(opts)
       dap.listeners.before.attach.dapui_config = function()
-        dapui.open()
+        dapview.open()
       end
       dap.listeners.before.launch.dapui_config = function()
-        dapui.open()
+        dapview.open()
       end
     end,
     cond = function()
@@ -27,7 +37,7 @@ return {
     "leoluz/nvim-dap-go",
     dependencies = {
       -- Also requires delve installed.
-      "rcarriga/nvim-dap-ui",
+      "igorlfs/nvim-dap-view",
     },
     config = function()
       require("dap-go").setup()
@@ -40,6 +50,9 @@ return {
   },
   {
     "mfussenegger/nvim-dap",
+    dependencies = {
+      "igorlfs/nvim-dap-view",
+    },
     cond = function()
       return func.check_global_var("use_dap_ui", true, true)
     end,
