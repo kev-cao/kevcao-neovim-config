@@ -539,6 +539,15 @@ M.neotest = {
       desc = "Run nearest test",
     },
     {
+      "<leader><S-t>d",
+      function()
+        require("neotest").run.run({ strategy = "dap" })
+        require("neotest").summary.open()
+      end,
+      mode = "n",
+      desc = "Debug nearest test",
+    },
+    {
       "<leader><S-t>l",
       function()
         require("neotest").run.run_last()
