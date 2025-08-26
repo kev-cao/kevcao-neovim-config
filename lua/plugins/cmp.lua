@@ -36,7 +36,13 @@ return {
         completion = {
           completeopt = "noselect",
         },
-        mapping = cmp.mapping.preset.insert({
+        mapping = {
+          ['<Down>'] = {
+            i = cmp.mapping.select_next_item(),
+          },
+          ['<Up>'] = {
+            i = cmp.mapping.select_prev_item(),
+          },
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -63,7 +69,7 @@ return {
               fallback()
             end
           end, { "i", "s" }),
-        }),
+        },
         preselect = cmp.PreselectMode.None,
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
