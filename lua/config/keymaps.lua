@@ -491,12 +491,31 @@ M.test = {
   },
 }
 
+--- Helper function to expand Neotest UI.
+--- @param opts { open: boolean, close: boolean } | nil
+local function toggle_neotest_ui(opts)
+  if opts then
+    if opts.close then
+      require("neotest").output_panel.close()
+      require("neotest").summary.close()
+      return
+    elseif opts.open then
+      require("neotest").output_panel.open()
+      require("neotest").summary.open()
+      return
+    end
+  end
+  require("neotest").output_panel.toggle()
+  require("neotest").summary.toggle()
+end
+
 M.neotest = {
   keys = {
     {
       "<leader><S-t>s",
       function()
         require("neotest").run.run({ suite = true })
+        toggle_neotest_ui({ open = true })
       end,
       mode = "n",
       desc = "Run test suite",
@@ -505,6 +524,7 @@ M.neotest = {
       "<leader><S-t>f",
       function()
         require("neotest").run.run(vim.fn.expand("%"))
+        toggle_neotest_ui({ open = true })
       end,
       mode = "n",
       desc = "Run test file",
@@ -513,6 +533,7 @@ M.neotest = {
       "<leader><S-t>t",
       function()
         require("neotest").run.run()
+        toggle_neotest_ui({ open = true })
       end,
       mode = "n",
       desc = "Run nearest test",
@@ -521,6 +542,7 @@ M.neotest = {
       "<leader><S-t>l",
       function()
         require("neotest").run.run_last()
+        toggle_neotest_ui({ open = true })
       end,
       mode = "n",
       desc = "Run last test",
@@ -528,8 +550,7 @@ M.neotest = {
     {
       "<leader><S-t>o",
       function()
-        require("neotest").output_panel.toggle()
-        require("neotest").summary.toggle()
+        toggle_neotest_ui()
       end,
       mode = "n",
       desc = "Toggle test output",
@@ -539,8 +560,7 @@ M.neotest = {
     {
       "q",
       function()
-        require("neotest").output_panel.close()
-        require("neotest").summary.close()
+        toggle_neotest_ui({ close = true })
       end,
       mode = { "n", "t" },
       desc = "Close test output panel",
