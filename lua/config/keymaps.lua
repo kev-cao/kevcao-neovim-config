@@ -664,7 +664,7 @@ M.copilot = {
       desc = "Accept Copilot suggestion",
     },
     {
-      "<C-j>",
+      "<C-h>",
       function()
         local copilot = require("copilot.suggestion")
         if copilot.is_visible() then
