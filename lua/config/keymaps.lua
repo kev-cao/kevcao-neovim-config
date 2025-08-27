@@ -492,21 +492,25 @@ M.test = {
 }
 
 --- Helper function to expand Neotest UI.
---- @param opts { open: boolean, close: boolean } | nil
+--- @param opts { open: boolean, close: boolean, clear: boolean } | nil
 local function toggle_neotest_ui(opts)
-  if opts then
-    if opts.close then
-      require("neotest").output_panel.close()
-      require("neotest").summary.close()
-      return
-    elseif opts.open then
-      require("neotest").output_panel.open()
-      require("neotest").summary.open()
-      return
-    end
+  if opts == nil then
+    opts = {}
   end
-  require("neotest").output_panel.toggle()
-  require("neotest").summary.toggle()
+  if opts.close then
+    require("neotest").output_panel.close()
+    require("neotest").summary.close()
+  elseif opts.open then
+    require("neotest").output_panel.open()
+    require("neotest").summary.open()
+  else
+    require("neotest").output_panel.toggle()
+    require("neotest").summary.toggle()
+  end
+
+  if opts.clear then
+    require("neotest").output_panel.clear()
+  end
 end
 
 M.neotest = {
@@ -524,7 +528,7 @@ M.neotest = {
       "<leader><S-t>f",
       function()
         require("neotest").run.run(vim.fn.expand("%"))
-        toggle_neotest_ui({ open = true })
+        toggle_neotest_ui({ open = true, clear = true })
       end,
       mode = "n",
       desc = "Run test file",
@@ -533,7 +537,7 @@ M.neotest = {
       "<leader><S-t>t",
       function()
         require("neotest").run.run()
-        toggle_neotest_ui({ open = true })
+        toggle_neotest_ui({ open = true, clear = true })
       end,
       mode = "n",
       desc = "Run nearest test",
@@ -551,7 +555,7 @@ M.neotest = {
       "<leader><S-t>l",
       function()
         require("neotest").run.run_last()
-        toggle_neotest_ui({ open = true })
+        toggle_neotest_ui({ open = true, clear = true })
       end,
       mode = "n",
       desc = "Run last test",
