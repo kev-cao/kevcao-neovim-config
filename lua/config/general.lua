@@ -59,6 +59,7 @@ vim.opt.ruler = true
 vim.opt.cmdheight = 1
 vim.opt.updatetime = 750
 vim.opt.signcolumn = "yes"
+vim.opt.cursorline = true
 vim.opt.guicursor = "n-v-c-sm:block-blinkwait100-blinkoff20-blinkon20,"
   .. "i-ci-ve:ver25-blinkwait100-blinkoff20-blinkon20,"
   .. "r-cr-o:hor20-blinkwait100-blinkoff20-blinkon20"
@@ -90,31 +91,3 @@ vim.api.nvim_create_user_command("Terminal", "botright vs | term", {})
 -- Set up command-line abbreviations.
 vim.cmd("cabbrev terminal Terminal")
 vim.cmd("cabbrev term Terminal")
-
---[[
--- ==========================================================
--- ==================== Auto Commands =======================
--- ==========================================================
---]]
-local func = require("util.func")
-vim.api.nvim_create_augroup("formatter", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-  group = "formatter",
-  pattern = "*",
-  callback = function()
-    if func.check_global_var("use_formatter", true, false) then
-      vim.cmd("FormatWrite")
-    end
-  end,
-})
-
--- Don't clear the clipboard on exit
-vim.api.nvim_create_autocmd("VimLeave", {
-  pattern = "*",
-  callback = function()
-    local clip = vim.fn.getreg("+")
-    local esc = vim.fn.shellescape(clip)
-    local cmd = "echo " .. esc .. " | xclip -selection clipboard"
-    vim.fn.system(cmd)
-  end,
-})

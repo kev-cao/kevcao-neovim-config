@@ -743,6 +743,128 @@ M.fugitive = {
       mode = "x",
       desc = "Copy GitHub URL for selection",
     },
+    {
+      "<leader>gm",
+      function()
+        if not func.in_git_repo() then
+          vim.notify("Not in a git repository.", vim.log.levels.ERROR)
+          return
+        end
+        if not func.has_executable("git") then
+          vim.notify("No merge conflicts found.", vim.log.levels.INFO)
+          return
+        end
+
+        vim.cmd("tabnew")
+        vim.cmd("Git mergetool")
+        vim.schedule(function()
+          local qf = vim.fn.getqflist()
+          if #qf == 0 then
+            vim.notify("No merge conflicts found.", vim.log.levels.INFO)
+            return
+          end
+
+          -- Open quickfix, jump to the first entry, then launch the 3-way diff
+          vim.cmd("copen")   -- show the list (focus usually stays in the edit window)
+          local qfwin = vim.fn.getqflist({ winid = 1 }).winid
+          if qfwin ~= 0 then
+            vim.fn.win_gotoid(qfwin)
+            vim.cmd("wincmd J | resize 15")
+            vim.cmd("wincmd p")  -- return focus to edit window
+          end
+          vim.cmd("cc 1")       -- open the 1st quickfix entry in the current window
+          vim.cmd("Gvdiffsplit!") -- start Fugitive’s 3-way diff on that file
+        end)
+      end,
+      mode = "n",
+      desc = "Open git mergetool",
+    },
+  },
+  buflocal = {
+    {
+      "<localleader><S-w>",
+      function()
+        vim.cmd("Gwrite!")
+        vim.cmd("Git mergetool")
+        local qf = vim.fn.getqflist()
+        if #qf == 0 then
+          vim.notify("All conflicts resolved", vim.log.levels.INFO)
+          vim.cmd("tabc")
+          return
+        end
+        vim.cmd("cc 1")
+        vim.cmd("Gvdiffsplit!")
+      end,
+      mode = "n",
+      desc = "Write (stage) current file",
+    },
+    {
+      "<localleader>j",
+      "]c",
+      mode = "n",
+      desc = "Next hunk",
+    },
+    {
+      "<localleader>k",
+      "[c",
+      mode = "n",
+      desc = "Previous hunk",
+    },
+    {
+      "<localleader><S-j>",
+      function()
+        local qfinfo = vim.fn.getqflist({ idx = 0, size = 0 })
+        local curr  = qfinfo.idx   -- current entry index (1-based, 0 if none)
+        local total = qfinfo.size  -- number of entries
+        if curr == 0 then
+          vim.notify("No more conflict entries.", vim.log.levels.ERROR)
+        end
+        vim.cmd("only")
+        vim.cmd("botright copen 15")
+        if curr == total then
+          vim.cmd("cfirst")
+        else
+          vim.cmd("cnext")
+        end
+        vim.cmd("Gvdiffsplit!")
+      end,
+      mode = "n",
+      desc = "Next conflicting file",
+    },
+    {
+      "<localleader><S-k>",
+      function()
+        local qfinfo = vim.fn.getqflist({ idx = 0, size = 0 })
+        local curr  = qfinfo.idx   -- current entry index (1-based, 0 if none)
+        if curr == 0 then
+          vim.notify("No more merge conflict entries.", vim.log.levels.ERROR)
+        end
+        vim.cmd("only")
+        vim.cmd("botright copen 15")
+        if curr == 1 then
+          vim.cmd("clast")
+        else
+          vim.cmd("cprev")
+        end
+        vim.cmd("Gvdiffsplit!")
+      end,
+      mode = "n",
+      desc = "Previous conflicting file",
+    },
+  },
+  mainbuflocal = {
+    {
+      "<localleader>h",
+      "<cmd>diffget //2<CR>",
+      mode = "n",
+      desc = "Get hunk from left",
+    },
+    {
+      "<localleader>l",
+      "<cmd>diffget //3<CR>",
+      mode = "n",
+      desc = "Get hunk from right",
+    },
   },
 }
 

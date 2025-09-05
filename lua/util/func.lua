@@ -115,4 +115,19 @@ function M.make_buflocal(specs)
   return ret
 end
 
+--- Checks if the current working directory is inside a git repository.
+--- @return boolean: True if inside a git repository, false otherwise.
+function M.in_git_repo()
+  local _ = vim.fn.system("git rev-parse --is-inside-work-tree")
+  return vim.v.shell_error == 0
+end
+
+--- Checks if the current git repository has merge conflicts.
+--- @return boolean: True if there are merge conflicts, false otherwise.
+--- Only works if inside a git repository. Call in_git_repo() first.
+function M.has_merge_conflicts()
+  local result = vim.fn.systemlist({ "git", "ls-files", "-u" })
+  return #result > 0
+end
+
 return M
