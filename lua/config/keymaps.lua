@@ -727,7 +727,7 @@ M.fugitive = {
           vim.notify("Not in a git repository.", vim.log.levels.ERROR)
           return
         end
-        if not func.has_executable("git") then
+        if not func.has_merge_conflicts() then
           vim.notify("No merge conflicts found.", vim.log.levels.INFO)
           return
         end
