@@ -39,8 +39,8 @@ vim.g.use_alpha = true
 vim.g.use_neorg = true
 vim.g.use_formatter = true
 vim.g.use_folding = true
-vim.g.use_aider = true
 vim.g.use_claude = true
+vim.g.use_oil = true
 
 vim.g.nvim_tree_width = 30
 

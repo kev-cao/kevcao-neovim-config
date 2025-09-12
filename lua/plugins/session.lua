@@ -49,15 +49,6 @@ return {
           end
         end
       end,
-      post_hook = function()
-        if func.check_global_var("use_nvim_tree", true, false) then
-          local nvim_tree = require("nvim-tree")
-          local api = require("nvim-tree.api")
-          api.tree.toggle()
-          nvim_tree.change_dir(vim.fn.getcwd())
-          api.tree.resize({ width = vim.g.nvim_tree_width })
-        end
-      end,
     },
     cond = function()
       return func.check_global_var("use_nvim_possession", true, true)

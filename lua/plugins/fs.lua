@@ -3,6 +3,7 @@
 
 local func = require("util.func")
 local keymaps = require("config.keymaps")
+
 return {
   {
     "nvim-tree/nvim-tree.lua",
@@ -24,4 +25,18 @@ return {
       require("nvim-tree").setup()
     end,
   },
+  {
+    'stevearc/oil.nvim',
+    cond = function()
+      return func.check_global_var("use_oil", true, true)
+    end,
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {
+      use_default_keymaps = false,
+      skip_confirm_for_simple_edits = true,
+    },
+    keys = keymaps.oil.keys,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  }
 }

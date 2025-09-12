@@ -88,12 +88,6 @@ M.general = {
       mode = { "n", "i", "v" },
       desc = "Decrease window width",
     },
-    {
-      "q:",
-      "<nop>",
-      hidden = true,
-      mode = "n",
-    },
     -- Rebind macro recording to <M-q> to avoid accidentally recording macros
     {
       "q",
@@ -597,23 +591,6 @@ M.code_companion = {
       mode = { "n", "x" },
       desc = "Code companion actions",
     },
-  },
-}
-
-M.aider = {
-  keys = {
-    {
-      "<leader>ao",
-      "<cmd>AiderOpen<CR>",
-      mode = { "n" },
-      desc = "Open Aider",
-    },
-    {
-      "<leader>am",
-      "<cmd>AiderAddModifiedFiles<CR>",
-      mode = { "n" },
-      desc = "Add modified files to Aider",
-    }
   },
 }
 
@@ -1555,6 +1532,142 @@ M.claude = {
       desc = "Toggle Claude Code",
     }
   }
+}
+
+
+M.oil = {
+  keys = {
+    {
+      "<leader>o",
+      function()
+        local oil = require("oil")
+        oil.toggle_float(".")
+      end,
+      mode = "n",
+      desc = "Toggle Oil explorer in cwd",
+    },
+    {
+      "<localleader>o",
+      function()
+        local oil = require("oil")
+        oil.toggle_float(nil)
+      end,
+      mode = "n",
+      desc = "Toggle Oil explorer in current buffer's dir",
+    }
+  },
+  bufkeys = {
+    {
+      "<CR>",
+      function()
+        local oil = require("oil")
+        oil.select()
+      end,
+      mode = "n",
+      desc = "Open file or directory"
+    },
+    {
+      "<C-v>",
+      function()
+        local oil = require("oil")
+        oil.select({vertical = true })
+      end,
+      mode = "n",
+      desc = "Open file in vertical split",
+    },
+    {
+      "<C-x>",
+      function()
+        local oil = require("oil")
+        oil.select({horizontal = true })
+      end,
+      mode = "n",
+      desc = "Open file in horizontal split",
+    },
+    {
+      "<S-h>",
+      function()
+        local oil = require("oil.actions")
+        oil.parent.callback()
+      end,
+      mode = "n",
+      desc = "Move to parent directory",
+    },
+    {
+      "<S-l>",
+      function()
+        local oil = require("oil")
+        local entry = oil.get_cursor_entry()
+        if entry == nil then
+          return
+        end
+
+        if entry.type == "directory" then
+          oil.select()
+        end
+      end,
+      mode = "n",
+      desc = "Open directory",
+    },
+    {
+      "v",
+      function()
+        local oil = require("oil.actions")
+        oil.preview.callback()
+      end,
+      mode = "n",
+      desc = "Toggle preview window",
+    },
+    {
+      "q",
+      function()
+        local oil = require("oil")
+        local actions = require("oil.actions")
+        oil.save(
+          { confirm = true },
+          function(err)
+            if err == nil then
+              actions.close.callback()
+            elseif err == 'Canceled' then
+              oil.discard_all_changes()
+              actions.close.callback()
+            else
+              vim.notify("Unexpected error " .. err, vim.log.levels.ERROR)
+            end
+          end
+        )
+      end,
+      mode = "n",
+      desc = "Close explorer",
+    },
+    {
+      "y",
+      function()
+        local oil = require("oil.actions")
+        oil.yank_entry.callback()
+      end,
+      mode = "n",
+      desc = "Copy filepath of current entry",
+    },
+    {
+      "`",
+      function()
+        local oil = require("oil.actions")
+        oil.cd.callback()
+      end,
+      mode = "n",
+      desc = "cd to directory",
+    },
+    {
+      "gx",
+      function()
+        local oil = require("oil.actions")
+        oil.open_external.callback()
+      end,
+      mode = "n",
+      desc = "cd to directory",
+    },
+  },
 }
 
 return M

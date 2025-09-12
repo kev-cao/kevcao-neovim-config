@@ -6,18 +6,6 @@ local keymaps = require("config.keymaps")
 
 return {
   {
-    "joshuavial/aider.nvim",
-    cond = function()
-      return func.check_global_var("use_aider", true, true)
-    end,
-    opts = {
-      auto_manage_context = true,
-      default_bindings = false,
-      debug = false,
-    },
-    keys = keymaps.aider.keys,
-  },
-  {
     "zbirenbaum/copilot.lua",
     event = { "InsertEnter" },
     cond = function()
