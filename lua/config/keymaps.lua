@@ -24,6 +24,7 @@ M.groups = {
   { "<leader>a", group = "AI", icon = { icon = "󱚤", color = "green" } },
   { "<leader>S", group = "Sessions", icon = { icon = "󱫭", color = "green" } },
   { "<leader>o", group = "OrgMode", icon = { icon = "", color = "green" } },
+  { "<leader>f", group = "Filesystem", icon = { icon = "", color = "green" } },
 }
 
 -- General keymaps that should always be loaded
@@ -1538,7 +1539,7 @@ M.claude = {
 M.oil = {
   keys = {
     {
-      "<leader>o",
+      "<leader>f",
       function()
         local oil = require("oil")
         oil.toggle_float(".")
@@ -1547,7 +1548,7 @@ M.oil = {
       desc = "Toggle Oil explorer in cwd",
     },
     {
-      "<localleader>o",
+      "<localleader>f",
       function()
         local oil = require("oil")
         oil.toggle_float(nil)
