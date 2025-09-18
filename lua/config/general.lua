@@ -9,7 +9,6 @@ vim.g.use_fugitive = true
 vim.g.use_gitsigns = true
 vim.g.use_virtcolumn = false -- bug with covering text, waiting for https://github.com/xiyaowong/virtcolumn.nvim/pull/11
 vim.g.use_copilot = true
-vim.g.use_codecompanion = true
 vim.g.use_cmp = true
 vim.g.use_snippet = true
 vim.g.use_lsp = true

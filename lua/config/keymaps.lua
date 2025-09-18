@@ -21,7 +21,7 @@ M.groups = {
   { "<leader>m<S-j>", group = "Next bookmark in group [0-9]", icon = { icon = "󰒭", color = "green" } },
   { "<leader>m<S-k>", group = "Previous bookmark in group [0-9]", icon = { icon = "󰒮", color = "green" } },
   { "<leader>l", group = "LSP", icon = { icon = "", color = "red" } },
-  { "<leader>a", group = "AI", icon = { icon = "󱚤", color = "green" } },
+  { "<leader>c", group = "Claude AI", icon = { icon = "󱚤", color = "green" } },
   { "<leader>S", group = "Sessions", icon = { icon = "󱫭", color = "green" } },
   { "<leader>o", group = "OrgMode", icon = { icon = "", color = "green" } },
   { "<leader>f", group = "Filesystem", icon = { icon = "", color = "green" } },
@@ -582,17 +582,6 @@ M.neotest = {
       desc = "Clear test output panel",
     },
   }
-}
-
-M.code_companion = {
-  keys = {
-    {
-      "<leader>aa",
-      "<cmd>CodeCompanionActions<CR>",
-      mode = { "n", "x" },
-      desc = "Code companion actions",
-    },
-  },
 }
 
 M.nvim_possession = {
@@ -1527,7 +1516,7 @@ M.winshift = {
 M.claude = {
   keys = {
     {
-      "<leader>ac",
+      "<leader>cc",
       "<cmd>ClaudeCode<CR>",
       mode = "n",
       desc = "Toggle Claude Code",

@@ -27,38 +27,6 @@ return {
     end,
   },
   {
-    "olimorris/codecompanion.nvim",
-    dependencies = {
-      -- curl must be installed
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    opts = {
-      strategies = {
-        chat = {
-          adapter = "copilot",
-          slash_commands = {
-            ["file"] = {
-              opts = {
-                provider = "fzf_lua",
-              },
-            },
-          },
-        },
-        inline = {
-          adapter = "copilot",
-        },
-      },
-    },
-    keys = keymaps.code_companion.keys,
-    config = function(_, opts)
-      require("codecompanion").setup(opts)
-    end,
-    cond = function()
-      return func.check_global_var("use_codecompanion", true, true)
-    end,
-  },
-  {
     "greggh/claude-code.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim", -- Required for git operations
