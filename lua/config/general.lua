@@ -3,7 +3,6 @@
 
 -- Enabling and disabling plugins
 vim.g.use_fzf = true
-vim.g.use_treesitter_context = true
 vim.g.use_auto_pairs = true
 vim.g.use_fugitive = true
 vim.g.use_gitsigns = true
@@ -83,6 +82,10 @@ vim.g.vimtex_quickfix_ignore_filters = {
   "does not make sense",
   "Non standard sectioning",
 }
+
+if vim.g.use_treesitter then
+  vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+end
 
 -- Create the Terminal command using the API.
 vim.api.nvim_create_user_command("Terminal", "botright vs | term", {})

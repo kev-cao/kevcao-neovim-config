@@ -123,39 +123,8 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    -- C compiler and libstdc++ must be installed
-    -- Git must be installed as well as tar/curl
-    event = { "BufRead", "BufWinEnter", "BufNewFile" },
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-          "bash",
-          "c",
-          "css",
-          "go",
-          "gitignore",
-          "gomod",
-          "gosum",
-          "gowork",
-          "html",
-          "javascript",
-          "typescript",
-          "json",
-          "lua",
-          "markdown",
-          "python",
-          "yaml",
-        },
-        auto_install = true,
-        sync_install = true,
-        highlight = {
-          enable = true,
-          disable = function(_, bufnr) -- Disable in files with more than 5K
-            return vim.api.nvim_buf_line_count(bufnr) > 5000
-          end,
-        },
-      })
-    end,
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
     cond = function()
       return func.check_global_var("use_treesitter", true, true)
@@ -170,7 +139,7 @@ return {
       max_lines = 3,
     },
     cond = function()
-      return func.check_global_var("use_treesitter_context", true, true)
+      return func.check_global_var("use_treesitter", true, true)
     end,
   },
   {

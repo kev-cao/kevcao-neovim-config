@@ -12,7 +12,7 @@ return {
       "benlubas/neorg-conceal-wrap",
     },
     lazy = false,
-    version = "*",
+    branch = "main",
     cond = func.check_global_var("use_neorg", true, true),
     opts = {
       load = {
