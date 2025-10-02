@@ -271,8 +271,18 @@ return {
   },
   {
     "cohama/lexima.vim",
+    opts = {
+      custom_rules = {
+        { char = " ", at = "- (\\%#)", input = ' ', filetype = "norg" },
+      }
+    },
     cond = function()
       return func.check_global_var("use_auto_pairs", true, true)
+    end,
+    config = function(_, opts)
+      for _, rule in pairs(opts.custom_rules) do
+        vim.fn["lexima#add_rule"](rule)
+      end
     end,
   },
   {
