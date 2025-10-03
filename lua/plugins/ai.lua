@@ -34,6 +34,10 @@ return {
     keys = keymaps.claude.keys,
     opts = {
       command = "NODENV_VERSION=23.9.0 claude",
+      window = {
+        split_ratio = 0.3,
+        position = "vertical",
+      }
     },
     cond = function()
       return func.check_global_var("use_claude", true, true)
