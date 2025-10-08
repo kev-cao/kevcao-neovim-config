@@ -36,7 +36,7 @@ return {
       command = "NODENV_VERSION=23.9.0 claude",
       window = {
         split_ratio = 0.3,
-        position = "vertical",
+        position = "vertical botright",
       }
     },
     cond = function()
