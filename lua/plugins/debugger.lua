@@ -62,7 +62,7 @@ return {
         {
           type = "go",
           request = "attach",
-          name = "Attach to CRDB process",
+          name = "Attach to process",
           mode = "local",
           processId = require("dap.utils").pick_process,
           substitutePath = {
@@ -72,6 +72,20 @@ return {
             },
           },
         },
+        {
+          type = "go",
+          name = "Attach remote",
+          mode = "remote",
+          request = "attach",
+          port = 38697,
+          host = "127.0.0.1",
+          substitutePath = {
+            {
+              from = "/Users/kevin/go/src/github.com/cockroachdb/cockroach",
+              to = "",
+            },
+          },
+        }
       }
     end,
   },
