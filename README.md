@@ -28,3 +28,5 @@
     - [Github CLI](https://cli.github.com/)
 - claude code
     - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code/setup)
+- nvim-lint
+    - [golangci-lint]{https://golangci-lint.run/docs/welcome/install/}

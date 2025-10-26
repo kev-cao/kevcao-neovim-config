@@ -39,6 +39,7 @@ vim.g.use_formatter = true
 vim.g.use_folding = true
 vim.g.use_claude = true
 vim.g.use_oil = true
+vim.g.use_linter = true
 
 vim.g.nvim_tree_width = 30
 
@@ -93,3 +94,7 @@ vim.api.nvim_create_user_command("Terminal", "botright vs | term", {})
 -- Set up command-line abbreviations.
 vim.cmd("cabbrev terminal Terminal")
 vim.cmd("cabbrev term Terminal")
+
+vim.diagnostic.config({
+  virtual_text = true,
+})

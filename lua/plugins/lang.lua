@@ -157,4 +157,20 @@ return {
       },
     },
   },
+  {
+    "mfussenegger/nvim-lint",
+    branch = "master",
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
+    cond = function()
+      return func.check_global_var("use_linter", true, true)
+    end,
+    opts = {
+      go = { "golangcilint" },
+    },
+    config = function(_, opts)
+      local lint = require("lint")
+      lint.linters_by_ft = opts
+    end,
+  },
 }

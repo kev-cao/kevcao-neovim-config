@@ -39,10 +39,12 @@ return {
           functionTypeParameters = true,
           parameterNames = true,
           rangeVariableTypes = true,
+          ignoredError = true,
         },
         completeUnimported = true,
         deepCompletion = true,
         usePlaceholders = false,
+        diagnosticsDelay = "250ms",
         analyses = {
           unusedparams = true,
           nilness = true,

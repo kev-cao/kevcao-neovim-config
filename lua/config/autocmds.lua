@@ -4,11 +4,14 @@
 local func = require("util.func")
 local keymaps = require("config.keymaps")
 
-vim.api.nvim_create_augroup("formatter", { clear = true })
+vim.api.nvim_create_augroup("lang", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
-  group = "formatter",
+  group = "lang",
   pattern = "*",
   callback = function()
+    if func.check_global_var("use_linter", true, false) then
+      require("lint").try_lint()
+    end
     if func.check_global_var("use_formatter", true, false) then
       vim.cmd("FormatWrite")
     end
