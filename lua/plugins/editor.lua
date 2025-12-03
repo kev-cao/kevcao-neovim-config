@@ -181,7 +181,7 @@ return {
           alt = { "WARNING", "XXX" },
         },
         PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-        NOTE = { icon = " ", color = "info", alt = { "INFO" } },
+        NOTE = { icon = " ", color = "info", alt = { "INFO", "NB" } },
         TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
       },
       search = {
