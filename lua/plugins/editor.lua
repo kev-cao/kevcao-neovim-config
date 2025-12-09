@@ -64,6 +64,7 @@ return {
     end,
     opts = function()
       return {
+        tempfile_dir = "/tmp",
         filetype = {
           typescript = {
             require("formatter.filetypes.typescript").prettier,
