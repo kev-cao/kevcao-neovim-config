@@ -44,7 +44,7 @@ vim.g.use_linter = true
 vim.g.nvim_tree_width = 30
 
 vim.opt.colorcolumn = { "80", "100" }
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.relativenumber = true
 vim.opt.number = true
 vim.opt.tabstop = 2
