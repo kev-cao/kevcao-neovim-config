@@ -117,6 +117,12 @@ M.general = {
       "<C-\\><C-n><C-w>",
       mode = "t",
     },
+    {
+      "<M-l>",
+      "<cmd>nohlsearch | diffupdate | normal! <C-l><CR>",
+      mode = { "n", "i", "v" },
+      desc = "Clear highlights and redraw screen",
+    }
   },
 }
 
