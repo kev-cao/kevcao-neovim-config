@@ -13,6 +13,13 @@ return {
         sections = {
           "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", "console",
         },
+        base_sections = {
+          scopes = {
+            keymap = "A",
+            label = "Scopes [A]",
+            short_label = "󰂥 [S]",
+          },
+        },
         default_section = "scopes",
         controls = {
           enabled = true,
@@ -53,6 +60,9 @@ return {
     dependencies = {
       "igorlfs/nvim-dap-view",
     },
+    init = function()
+      vim.o.switchbuf = "useopen,uselast"
+    end,
     cond = function()
       return func.check_global_var("use_dap_ui", true, true)
     end,
