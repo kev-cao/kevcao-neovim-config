@@ -4,7 +4,7 @@ local keymaps = require("config.keymaps")
 --- @class LspSpec
 --- @field lsp string[] LSP servers associated with the language
 --- @field ft string[] Filetypes associated with the language
---- @field linter? string Linters to use for the filetypes
+--- @field linter? string[] Linters to use for the filetypes
 --- @field opts? table<string, any> Options to pass to the LSP server setup
 
 return {

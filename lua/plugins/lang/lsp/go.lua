@@ -59,7 +59,7 @@ return {
       },
     },
   },
-  linter = "golangci-lint",
+  linter = { "golangci-lint" },
   {
     "charlespascoe/vim-go-syntax",
     ft = { "go", "gomod", "gowork", "gotmpl" },

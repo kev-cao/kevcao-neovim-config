@@ -16,7 +16,7 @@ return {
     opts = function()
       local opts = {}
       local lsp_specs = plugins.get_lsp_specs()
-      for _, spec in pairs(lsp_specs) do
+      for _, spec in ipairs(lsp_specs) do
         if spec.linter then
           for _, ft in ipairs(spec.ft or {}) do
             opts[ft] = spec.linter
