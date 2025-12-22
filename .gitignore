@@ -1,3 +1,5 @@
+lua/config/local.lua
+
 # Tools
 /.direnv/
 /venv/

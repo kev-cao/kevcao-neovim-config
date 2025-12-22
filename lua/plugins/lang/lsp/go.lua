@@ -1,7 +1,11 @@
---- @module 'lsp.gopls'
---- This module configures the Go language server (gopls) for Neovim.
+--- @module 'plugins.lang.lsp.go'
+--- This module configures the Go language server and related plugins for
+--- Neovim.
 
+--- @type LspSpec
 return {
+  lsp = {"gopls"},
+  ft = {"go"},
   opts = {
     on_attach = function(client, bufnr)
       if not client then
@@ -54,5 +58,10 @@ return {
         },
       },
     },
+  },
+  linter = "golangci-lint",
+  {
+    "charlespascoe/vim-go-syntax",
+    ft = { "go", "gomod", "gowork", "gotmpl" },
   },
 }

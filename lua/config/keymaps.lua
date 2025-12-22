@@ -1530,6 +1530,19 @@ M.claude = {
   }
 }
 
+M.opencode = {
+  keys = {
+    {
+      "<leader>cc",
+      function()
+        require("opencode").toggle()
+      end,
+      mode = "n",
+      desc = "Toggle OpenCode",
+    },
+  }
+}
+
 
 M.oil = {
   keys = {

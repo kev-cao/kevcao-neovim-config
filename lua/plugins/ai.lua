@@ -3,6 +3,7 @@
 
 local func = require("util.func")
 local keymaps = require("config.keymaps")
+local config  = require("util.config")
 
 return {
   {
@@ -13,7 +14,7 @@ return {
     end,
     keys = keymaps.copilot.keys,
     opts = {
-      copilot_node_command = "/Users/kevin/.nodenv/versions/23.9.0/bin/node",
+      copilot_node_command = config.get_local("node_path", "/usr/local/bin/node"),
       panel = {
         enabled = false,
       },
@@ -40,10 +41,31 @@ return {
       }
     },
     cond = function()
-      return func.check_global_var("use_claude", true, true)
+      if not func.check_global_var("use_ai_assistant", true, true) then
+        return false
+      end
+
+      return config.get_local("ai_assistant", nil) == "claude"
     end,
     config = function(_, opts)
       require("claude-code").setup(opts)
     end
   },
+  {
+    "NickvanDyke/opencode.nvim",
+    dependencies = {
+      { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
+    },
+    keys = keymaps.opencode.keys,
+    cond = function()
+      if not func.check_global_var("use_ai_assistant", true, true) then
+        return false
+      end
+
+      return config.get_local("ai_assistant", nil) == "opencode"
+    end,
+    init = function()
+      vim.o.autoread = true
+    end,
+  }
 }

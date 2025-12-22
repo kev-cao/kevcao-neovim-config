@@ -1,23 +1,13 @@
---- @module 'plugins.lang'
---- Language server and static syntax plugins
-
 local func = require("util.func")
 local keymaps = require("config.keymaps")
 
+--- @class LspSpec
+--- @field lsp string[] LSP servers associated with the language
+--- @field ft string[] Filetypes associated with the language
+--- @field linter? string Linters to use for the filetypes
+--- @field opts? table<string, any> Options to pass to the LSP server setup
+
 return {
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "neovim/nvim-lspconfig",
-    },
-    cond = function()
-      return func.check_global_var("use_lsp", true, true)
-    end,
-    config = function(_, opts)
-      require("typescript-tools").setup(opts)
-    end,
-  },
   {
     "neovim/nvim-lspconfig",
     event = { "BufRead", "BufWinEnter", "BufNewFile" },
@@ -25,14 +15,22 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "junegunn/fzf",
     },
-    opts = {
-      capabilities = {}, -- Global capabilities
-      servers = { -- Custom server options for nvim-lspconfig
-        gopls = require("lsp.gopls").opts,
-        lua_ls = require("lsp.lua").opts,
-        clangd = require("lsp.clangd").opts,
-      },
-    },
+    opts = function()
+      local opts = {
+        capabilities = {},
+        servers = {},
+      }
+      local plugins = require("util.plugins")
+      local lsp_specs = plugins.get_lsp_specs()
+      for _, spec in pairs(lsp_specs) do
+        if spec.opts then
+          for _, lsp in ipairs(spec.lsp) do
+            opts.servers[lsp] = spec.opts
+          end
+        end
+      end
+      return opts
+    end,
     config = function(_, opts)
       local capabilities = vim.tbl_deep_extend(
         "force",
@@ -122,31 +120,6 @@ return {
     end,
   },
   {
-    "nvim-treesitter/nvim-treesitter",
-    branch = "main",
-    lazy = false,
-    build = ":TSUpdate",
-    cond = function()
-      return func.check_global_var("use_treesitter", true, true)
-    end,
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
-    opts = {
-      max_lines = 3,
-    },
-    cond = function()
-      return func.check_global_var("use_treesitter", true, true)
-    end,
-  },
-  {
-    "charlespascoe/vim-go-syntax",
-    ft = { "go", "gomod", "gowork", "gotmpl" },
-  },
-  {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     opts = {
@@ -156,21 +129,5 @@ return {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
       },
     },
-  },
-  {
-    "mfussenegger/nvim-lint",
-    branch = "master",
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile" },
-    cond = function()
-      return func.check_global_var("use_linter", true, true)
-    end,
-    opts = {
-      go = { "golangcilint" },
-    },
-    config = function(_, opts)
-      local lint = require("lint")
-      lint.linters_by_ft = opts
-    end,
   },
 }
