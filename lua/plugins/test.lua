@@ -1,7 +1,7 @@
 --- @module 'plugins.test'
 --- Test related plugins
 
-local func = require("util.func")
+local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 return {
@@ -20,7 +20,7 @@ return {
       require("nvim-test").setup(opts)
     end,
     cond = function()
-      return func.check_global_var("use_nvim_test", true, true)
+      return not config.is_plugin_disabled("nvim-test")
     end,
   },
   {
@@ -33,7 +33,7 @@ return {
       "fredrikaverpil/neotest-golang",
     },
     cond = function()
-      return func.check_global_var("use_neotest", true, true)
+      return not config.is_plugin_disabled("neotest")
     end,
     keys = keymaps.neotest.keys,
     opts = {

@@ -1,4 +1,4 @@
-local func = require("util.func")
+local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 --- @class LspSpec
@@ -105,7 +105,7 @@ return {
     end,
     keys = keymaps.lsp.keys,
     cond = function()
-      return func.check_global_var("use_lsp", true, true)
+      return not config.is_plugin_disabled("lsp-config")
     end,
   },
   {
@@ -116,7 +116,7 @@ return {
       "neovim/nvim-lspconfig",
     },
     cond = function()
-      return func.check_global_var("use_lsp", true, true)
+      return not config.is_plugin_disabled("lsp-config")
     end,
   },
   {

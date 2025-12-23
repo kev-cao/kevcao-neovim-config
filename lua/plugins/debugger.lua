@@ -1,7 +1,7 @@
 --- @module 'plugins.debugger'
 --- Debugger related plugins
 
-local func = require("util.func")
+local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 return {
@@ -37,7 +37,7 @@ return {
       end
     end,
     cond = function()
-      return func.check_global_var("use_dap_ui", true, true)
+      return not config.is_plugin_disabled("dap-ui")
     end,
   },
   {
@@ -52,7 +52,7 @@ return {
     ft = "go",
     keys = keymaps.dapgo.keys,
     cond = function()
-      return func.check_global_var("use_dap_ui", true, true)
+      return not config.is_plugin_disabled("dap-ui")
     end,
   },
   {
@@ -64,7 +64,7 @@ return {
       vim.o.switchbuf = "useopen,uselast"
     end,
     cond = function()
-      return func.check_global_var("use_dap_ui", true, true)
+      return not config.is_plugin_disabled("dap-ui")
     end,
     config = function()
       local dap = require("dap")

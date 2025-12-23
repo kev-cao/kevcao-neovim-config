@@ -1,7 +1,7 @@
 --- @module "plugins.lang.lint"
 --- This module configures linters for Neovim.
 
-local func = require("util.func")
+local config = require("util.config")
 local plugins = require("util.plugins")
 
 return {
@@ -11,7 +11,7 @@ return {
     lazy = true,
     event = { "BufReadPre", "BufNewFile" },
     cond = function()
-      return func.check_global_var("use_linter", true, true)
+      return not config.is_plugin_disabled("nvim-lint")
     end,
     opts = function()
       local opts = {}

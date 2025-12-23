@@ -1,7 +1,7 @@
 --- @module 'plugins.session'
 --- All the session related plugins are defined here.
 
-local func = require("util.func")
+local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 return {
@@ -32,7 +32,7 @@ return {
         enable = true,
       },
       save_hook = function()
-        if func.check_global_var("use_nvim_tree", true, false) then
+        if not config.is_plugin_disabled("nvim_tree") then
           vim.cmd("NvimTreeFocus")
           vim.cmd("silent! bd")
         end
@@ -51,7 +51,7 @@ return {
       end,
     },
     cond = function()
-      return func.check_global_var("use_nvim_possession", true, true)
+      return not config.is_plugin_disabled("nvim_possession")
     end,
   },
 }

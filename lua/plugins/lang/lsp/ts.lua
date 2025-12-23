@@ -2,7 +2,7 @@
 --- This module configures the the TypeScript language server for Neovim and
 --- related plugins.
 
-local func = require("util.func")
+local config = require("util.config")
 
 --- @type LspSpec
 return {
@@ -15,7 +15,7 @@ return {
       "neovim/nvim-lspconfig",
     },
     cond = function()
-      return func.check_global_var("use_lsp", true, true)
+      return not config.is_plugin_disabled("lsp-config")
     end,
     config = function(_, opts)
       require("typescript-tools").setup(opts)

@@ -1,45 +1,13 @@
 --- @module 'general.lua'
 --- This contains general settings that don't fit into any other category
 
--- Enabling and disabling plugins
-vim.g.use_fzf = true
-vim.g.use_auto_pairs = true
-vim.g.use_fugitive = true
-vim.g.use_gitsigns = true
+local config = require("util.config")
+
+-- Enabling and disabling plugins. This is set at the global level to be shared
+-- across systems. For local overrides, use config/local.lua.
 vim.g.use_virtcolumn = false -- bug with covering text, waiting for https://github.com/xiyaowong/virtcolumn.nvim/pull/11
-vim.g.use_copilot = true
-vim.g.use_cmp = true
-vim.g.use_snippet = true
-vim.g.use_lsp = true
-vim.g.use_treesitter = true
-vim.g.use_floaterm = true
-vim.g.use_nvim_tree = true
-vim.g.use_lualine = true
-vim.g.use_dap_view = true
-vim.g.use_which_key = true
-vim.g.use_smooth_scroll = true
-vim.g.use_nvim_test = false
-vim.g.use_neotest = not vim.g.use_nvim_test
-vim.g.use_noice = true
-vim.g.use_nvim_possession = true
-vim.g.use_mini_surround = true
-vim.g.use_neoclip = true
-vim.g.use_todo_comments = true
-vim.g.use_vim_sleuth = true
-vim.g.use_colorizer = true
-vim.g.use_lazygit = true
-vim.g.use_autotag = true
-vim.g.use_octo = true
-vim.g.use_marks = true
-vim.g.use_live_share = true
-vim.g.use_goto_preview = true
-vim.g.use_alpha = true
-vim.g.use_neorg = true
-vim.g.use_formatter = true
-vim.g.use_folding = true
-vim.g.use_ai_assistant = true
-vim.g.use_oil = true
-vim.g.use_linter = true
+vim.g.use_neotest = true
+vim.g.use_nvim_test = config.is_plugin_disabled("neotest")
 
 vim.g.nvim_tree_width = 30
 

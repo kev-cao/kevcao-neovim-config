@@ -1,7 +1,7 @@
 --- @module 'plugins.org'
 --- Orgmode plugin configuration
 
-local func = require("util.func")
+local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 return {
@@ -13,7 +13,7 @@ return {
     },
     lazy = false,
     branch = "main",
-    cond = func.check_global_var("use_neorg", true, true),
+    cond = not config.is_plugin_disabled("neorg"),
     opts = {
       load = {
         ["core.defaults"] = {},

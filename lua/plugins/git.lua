@@ -1,7 +1,7 @@
 --- @module 'plugins.git'
 --- Git related plugins
 
-local func = require("util.func")
+local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 return {
@@ -13,7 +13,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     cond = function()
-      return func.check_global_var("use_octo", true, true)
+      return not config.is_plugin_disabled("octo")
     end,
     keys = keymaps.octo.keys,
     opts = {
@@ -35,7 +35,7 @@ return {
       { "nvim-lua/plenary.nvim" },
     },
     cond = function()
-      return func.check_global_var("use_lazygit", true, true)
+      return not config.is_plugin_disabled("lazygit")
     end,
     keys = keymaps.lazygit.keys,
   },
@@ -43,7 +43,7 @@ return {
     "tpope/vim-fugitive",
     keys = keymaps.fugitive.keys,
     cond = function()
-      return func.check_global_var("use_fugitive", true, true)
+      return not config.is_plugin_disabled("fugitive")
     end,
   },
   {
@@ -52,7 +52,7 @@ return {
       { "tpope/vim-fugitive" },
     },
     cond = function()
-      return func.check_global_var("use_fugitive", true, true)
+      return not config.is_plugin_disabled("fugitive")
     end,
   },
   {
@@ -63,7 +63,7 @@ return {
       require("gitsigns").setup()
     end,
     cond = function()
-      return func.check_global_var("use_gitsigns", true, true)
+      return not config.is_plugin_disabled("gitsigns")
     end,
   },
 }

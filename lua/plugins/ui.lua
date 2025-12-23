@@ -1,7 +1,7 @@
 --- @module 'plugins.ui'
 --- All the UI related plugins are defined here.
 
-local func = require("util.func")
+local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 return {
@@ -17,7 +17,7 @@ return {
       "gennaro-tedesco/nvim-possession",
     },
     cond = function()
-      return func.check_global_var("use_alpha", true, true)
+      return not config.is_plugin_disabled("alpha")
     end,
     config = function()
       local alpha = require("alpha")
@@ -50,7 +50,7 @@ return {
     "catgoose/nvim-colorizer.lua",
     event = "BufReadPre",
     cond = function()
-      return func.check_global_var("use_colorizer", true, true)
+      return not config.is_plugin_disabled("colorizer")
     end,
     config = function()
       require("colorizer").setup()
@@ -150,7 +150,7 @@ return {
       },
     },
     cond = function()
-      return func.check_global_var("use_lualine", true, true)
+      return not config.is_plugin_disabled("lualine")
     end,
   },
   {
@@ -167,7 +167,7 @@ return {
       wk.add(keymaps.groups)
     end,
     cond = function()
-      return func.check_global_var("use_which_key", true, true)
+      return not config.is_plugin_disabled("which-key")
     end,
   },
   {
@@ -182,7 +182,7 @@ return {
       require("neoscroll").setup(opts)
     end,
     cond = function()
-      return func.check_global_var("use_smooth_scroll", true, true)
+      return not config.is_plugin_disabled("neoscroll")
     end,
   },
   {
@@ -214,7 +214,7 @@ return {
       require("noice").setup(opts)
     end,
     cond = function()
-      return func.check_global_var("use_noice", true, true)
+      return not config.is_plugin_disabled("noice")
     end,
   },
 }

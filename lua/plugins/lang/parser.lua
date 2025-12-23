@@ -1,7 +1,7 @@
 --- @module "plugins.lang.parser"
 --- This module configures language parsers and related plugins for Neovim.
 
-local func = require("util.func")
+local config = require("util.config")
 
 return {
   {
@@ -10,7 +10,7 @@ return {
     lazy = false,
     build = ":TSUpdate",
     cond = function()
-      return func.check_global_var("use_treesitter", true, true)
+      return not config.is_plugin_disabled("treesitter")
     end,
   },
   {
@@ -22,7 +22,7 @@ return {
       max_lines = 3,
     },
     cond = function()
-      return func.check_global_var("use_treesitter", true, true)
+      return not config.is_plugin_disabled("treesitter")
     end,
   },
 }

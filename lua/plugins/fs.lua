@@ -1,7 +1,7 @@
 --- @module 'plugins.fs'
 --- All file system related plugins
 
-local func = require("util.func")
+local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 return {
@@ -19,7 +19,7 @@ return {
     end,
     lazy = false,
     cond = function()
-      return func.check_global_var("use_nvim_tree", true, true)
+      return not config.is_plugin_disabled("nvim-tree")
     end,
     config = function()
       require("nvim-tree").setup()
@@ -28,7 +28,7 @@ return {
   {
     'stevearc/oil.nvim',
     cond = function()
-      return func.check_global_var("use_oil", true, true)
+      return not config.is_plugin_disabled("oil")
     end,
     ---@module 'oil'
     ---@type oil.SetupOpts

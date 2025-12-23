@@ -10,7 +10,7 @@ return {
     "zbirenbaum/copilot.lua",
     event = { "InsertEnter" },
     cond = function()
-      return func.check_global_var("use_copilot", true, true)
+      return not config.is_plugin_disabled("copilot")
     end,
     keys = keymaps.copilot.keys,
     opts = {
@@ -41,11 +41,8 @@ return {
       }
     },
     cond = function()
-      if not func.check_global_var("use_ai_assistant", true, true) then
-        return false
-      end
-
-      return config.get_local("ai_assistant", nil) == "claude"
+      return config.get_local("ai_assistant", nil) == "claude" and not
+        config.is_plugin_disabled("claude-code")
     end,
     config = function(_, opts)
       require("claude-code").setup(opts)
@@ -58,11 +55,8 @@ return {
     },
     keys = keymaps.opencode.keys,
     cond = function()
-      if not func.check_global_var("use_ai_assistant", true, true) then
-        return false
-      end
-
-      return config.get_local("ai_assistant", nil) == "opencode"
+      return config.get_local("ai_assistant", nil) == "opencode" and not
+        config.is_plugin_disabled("opencode")
     end,
     init = function()
       vim.o.autoread = true

@@ -1,7 +1,7 @@
 --- @module 'autocmds.lua
 --- This file contains all the autocommands for Neovim
----
-local func = require("util.func")
+
+local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 vim.api.nvim_create_augroup("lang", { clear = true })
@@ -9,10 +9,10 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   group = "lang",
   pattern = "*",
   callback = function()
-    if func.check_global_var("use_linter", true, false) then
+    if not config.is_plugin_disabled("linter") then
       require("lint").try_lint()
     end
-    if func.check_global_var("use_formatter", true, false) then
+    if not config.is_plugin_disabled("formatter") then
       vim.cmd("FormatWrite")
     end
   end,
@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "WinNew" }, {
   group = "git",
   pattern = "*",
   callback = function(args)
-    if not func.check_global_var("use_fugitive", true, false) then
+    if not not config.is_plugin_disabled("fugitive") then
       return
     end
     -- We schedule because we need the window to be populated with the buffer
@@ -61,7 +61,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
   group = "git",
   pattern = "*",
   callback = function(args)
-    if not func.check_global_var("use_fugitive", true, false) then
+    if not not config.is_plugin_disabled("fugitive") then
       return
     end
     -- We schedule because we need the window to be populated with the buffer

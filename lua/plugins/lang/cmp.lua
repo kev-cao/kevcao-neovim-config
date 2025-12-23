@@ -1,7 +1,7 @@
 --- @module 'plugins.cmp'
 --- All the completion related plugins are defined here.
 
-local func = require("util.func")
+local config = require("util.config")
 
 return {
   {
@@ -14,7 +14,7 @@ return {
     },
     event = "InsertEnter",
     cond = function()
-      return func.check_global_var("use_cmp", true, true)
+      return not config.is_plugin_disabled("cmp")
     end,
     opts = function()
       local cmp = require("cmp")
@@ -112,7 +112,7 @@ return {
       "hrsh7th/nvim-cmp",
     },
     cond = function()
-      return func.check_global_var("use_snippet", true, true)
+      return not config.is_plugin_disabled("snippet")
     end,
   },
   {
