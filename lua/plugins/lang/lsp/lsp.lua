@@ -130,4 +130,9 @@ return {
       },
     },
   },
+  {
+    "zeioth/garbage-day.nvim",
+    depedencies = "neovim/nvim-lspconfig",
+    event = "VeryLazy",
+  },
 }
