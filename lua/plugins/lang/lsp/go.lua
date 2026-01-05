@@ -34,6 +34,16 @@ return {
     single_file_support = true,
     settings = {
       gopls = {
+        directoryFilters = {
+          "-**/node_modules",
+          "-**/_bazel",
+          "-**/bazel-bin",
+          "-**/bazel-out",
+          "-**bazel-testlogs",
+          "-**/vendor",
+          "-**/inflight_trace_dump",
+          "-pkg/sql/colexec",
+        },
         semanticTokens = true,
         staticcheck = true,
         hints = {
