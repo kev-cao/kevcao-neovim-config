@@ -7,6 +7,7 @@ local config = require("util.config")
 -- across systems. For local overrides, use config/local.lua.
 vim.g.use_virtcolumn = false -- bug with covering text, waiting for https://github.com/xiyaowong/virtcolumn.nvim/pull/11
 vim.g.use_neotest = true
+vim.g.use_neorg = false
 vim.g.use_nvim_test = config.is_plugin_disabled("neotest")
 
 vim.g.nvim_tree_width = 30

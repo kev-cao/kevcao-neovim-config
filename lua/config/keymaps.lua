@@ -1329,6 +1329,17 @@ M.goto_preview = {
   },
 }
 
+M.obsidian = {
+  keys = {
+    {
+      "<leader>os",
+      "<cmd>ObsidianSearch<CR>",
+      mode = "n",
+      desc = "Search in Obsidian vault",
+    },
+  }
+}
+
 M.neorg = {
   bufgroups = {
     {
