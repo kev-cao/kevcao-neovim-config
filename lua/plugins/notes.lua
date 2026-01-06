@@ -2,7 +2,6 @@
 --- Note-taking plugin configuration
 
 local config = require("util.config")
-local func = require("util.func")
 local keymaps = require("config.keymaps")
 
 return {
