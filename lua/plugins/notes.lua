@@ -70,6 +70,9 @@ return {
         time_format = "%H:%M",
       },
       follow_url_func = vim.ui.open,
+      completion = {
+        min_chars = 0,
+      }
     },
   },
   {
