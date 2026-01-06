@@ -151,4 +151,12 @@ function M.create_new_note(opts)
   end)
 end
 
+--- Inserts the current date at the cursor position in "Month Day, Year" format.
+--- @return nil
+function M.insert_todays_date()
+  local date_format = "%B %-e, %Y"
+  local date_str = tostring(os.date(date_format))
+  vim.api.nvim_put({ date_str }, "c", true, true)
+end
+
 return M

@@ -1392,6 +1392,12 @@ M.obsidian = {
       mode = "n",
       desc = "Show backlinks to current note",
     },
+    {
+      "<M-d>",
+      require("util.obsidian").insert_todays_date,
+      mode = "i",
+      desc = "Insert today's date",
+    }
   },
   keys = {
     {

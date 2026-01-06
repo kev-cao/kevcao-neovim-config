@@ -68,7 +68,8 @@ return {
         folder = "templates",
         date_format = "%Y-%m-%d",
         time_format = "%H:%M",
-      }
+      },
+      follow_url_func = vim.ui.open,
     },
   },
   {
