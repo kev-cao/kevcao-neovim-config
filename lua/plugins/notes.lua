@@ -45,13 +45,16 @@ return {
       attachments = {
         img_folder = "attachments",
       },
-      note_id_func = nil,
+      note_id_func = function(title)
+        return require("util.obsidian").note_id(title)
+      end,
       note_frontmatter_func = function(note)
         local out = {
           id = note.id,
+          created_at = tostring(os.date("%Y-%m-%d")),
           aliases = note.aliases,
           tags = note.tags,
-          maps = {},
+          categories = {},
         }
         -- `note.metadata` contains any manually added fields in the frontmatter.
         -- So here we just make sure those fields are kept in the frontmatter.
@@ -61,7 +64,12 @@ return {
           end
         end
         return out
-      end
+      end,
+      templates = {
+        folder = "templates",
+        date_format = "%Y-%m-%d",
+        time_format = "%H:%M",
+      }
     },
   },
   {

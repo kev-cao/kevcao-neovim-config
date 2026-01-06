@@ -1339,10 +1339,16 @@ M.obsidian = {
       desc = "Open note in Obsidian",
     },
     {
-      "<localleader>t",
+      "<localleader>h",
       "<cmd>ObsidianTOC<CR>",
       mode = "n",
       desc = "Show table of contents"
+    },
+    {
+      "<localleader>t",
+      "<cmd>ObsidianTemplate<CR>",
+      mode = "n",
+      desc = "Insert a template into current note",
     },
     {
       "<localleader>l",
@@ -1402,50 +1408,7 @@ M.obsidian = {
     },
     {
       "<leader>on",
-      function()
-        local client = require("obsidian").get_client()
-        local obsidian_path = config.get_local(
-          "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
-        )
-        local aborted = function()
-          vim.notify("Aborted note creation.", vim.log.levels.INFO)
-        end
-        func.query_directory(obsidian_path, function(dir)
-          if dir == nil then
-            aborted()
-            return
-          end
-
-          local title = nil
-          vim.ui.input({ prompt = "Note name: " }, function(input)
-            if input then
-              title = input
-            end
-          end)
-          if title == nil then
-            aborted()
-            return
-          end
-
-          local choice = vim.fn.confirm("Add timestamp to ID?", "&Yes\n&No\n&Cancel", 3)
-          if choice == 3 then
-            vim.notify("Aborted note creation.", vim.log.levels.INFO)
-            return
-          end
-
-          local note = client:create_note({
-            title = func.normalize_note_title(title),
-            id = func.note_id(title, choice == 1),
-            dir = dir,
-            no_write = true,
-          })
-          --- Have to append the aliases separately or else Obsidian.nvim adds
-          --- its own.
-          note.aliases = func.default_note_aliases(title)
-          client:open_note(note, { sync = true })
-          client:write_note_to_buffer(note)
-        end)
-      end,
+      require("util.obsidian").create_new_note,
       mode = "n",
       desc = "Create a new Obsidian note"
     },
