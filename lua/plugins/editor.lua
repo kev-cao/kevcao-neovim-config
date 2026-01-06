@@ -274,7 +274,7 @@ return {
     "cohama/lexima.vim",
     opts = {
       custom_rules = {
-        { char = " ", at = "- (\\%#)", input = ' ', filetype = "norg" },
+        { char = " ", at = "- \\[\\%#]", input = ' ', filetype = "markdown" },
       }
     },
     cond = function()

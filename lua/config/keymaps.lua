@@ -3,6 +3,7 @@
 -- Note: except for autocomplete keymaps, which are found in plugins/cmp.lua
 
 local func = require("util.func")
+local config = require("util.config")
 
 local M = {}
 
@@ -23,7 +24,7 @@ M.groups = {
   { "<leader>l", group = "LSP", icon = { icon = "", color = "red" } },
   { "<leader>c", group = "Claude AI", icon = { icon = "󱚤", color = "green" } },
   { "<leader>S", group = "Sessions", icon = { icon = "󱫭", color = "green" } },
-  { "<leader>o", group = "OrgMode", icon = { icon = "", color = "green" } },
+  { "<leader>o", group = "Obsidian", icon = { icon = "󱓧", color = "green" } },
   { "<leader>f", group = "Filesystem", icon = { icon = "", color = "green" } },
 }
 
@@ -1330,14 +1331,125 @@ M.goto_preview = {
 }
 
 M.obsidian = {
+  bufkeys = {
+    {
+      "<localleader>o",
+      "<cmd>ObsidianOpen<CR>",
+      mode = "n",
+      desc = "Open note in Obsidian",
+    },
+    {
+      "<localleader>t",
+      "<cmd>ObsidianTOC<CR>",
+      mode = "n",
+      desc = "Show table of contents"
+    },
+    {
+      "<localleader>l",
+      "<cmd>ObsidianLinks<CR>",
+      mode = "n",
+      desc = "List links in current note",
+    },
+    {
+      "<localleader>pi",
+      function()
+        vim.ui.input({ prompt = "Image name: " }, function(input)
+          if input then
+            vim.cmd("ObsidianPasteImage " .. input)
+          end
+        end)
+      end,
+      mode = "n",
+      desc = "Paste image from clipboard into Obsidian vault",
+    },
+    {
+      "<localleader>rr",
+      function()
+        vim.ui.input({ prompt = "New note name: " }, function(input)
+          if input then
+            vim.ui.input({ prompt = "Rename current note to '" .. input .. "'? (y/n): " }, function(confirm)
+              if confirm == "y" or confirm == "Y" then
+                vim.cmd("ObsidianRename " .. input)
+              else
+                vim.notify("Aborted note rename.", vim.log.levels.INFO)
+              end
+            end)
+          end
+        end)
+      end,
+      mode = "n",
+      desc = "Rename current Obsidian note",
+    },
+    {
+      "gr",
+      "<cmd>ObsidianBacklinks<CR>",
+      mode = "n",
+      desc = "Show backlinks to current note",
+    },
+  },
   keys = {
     {
       "<leader>os",
+      "<cmd>ObsidianQuickSwitch<CR>",
+      mode = "n",
+      desc = "Search Obsidian notes",
+    },
+    {
+      "<leader>or",
       "<cmd>ObsidianSearch<CR>",
       mode = "n",
-      desc = "Search in Obsidian vault",
+      desc = "Search in Obsidian notes",
     },
-  }
+    {
+      "<leader>on",
+      function()
+        local client = require("obsidian").get_client()
+        local obsidian_path = config.get_local(
+          "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
+        )
+        local aborted = function()
+          vim.notify("Aborted note creation.", vim.log.levels.INFO)
+        end
+        func.query_directory(obsidian_path, function(dir)
+          if dir == nil then
+            aborted()
+            return
+          end
+
+          local title = nil
+          vim.ui.input({ prompt = "Note name: " }, function(input)
+            if input then
+              title = input
+            end
+          end)
+          if title == nil then
+            aborted()
+            return
+          end
+
+          local choice = vim.fn.confirm("Add timestamp to ID?", "&Yes\n&No\n&Cancel", 3)
+          if choice == 3 then
+            vim.notify("Aborted note creation.", vim.log.levels.INFO)
+            return
+          end
+
+          local note = client:create_note({
+            title = func.normalize_note_title(title),
+            id = func.note_id(title, choice == 1),
+            dir = dir,
+            no_write = true,
+          })
+          --- Have to append the aliases separately or else Obsidian.nvim adds
+          --- its own.
+          note.aliases = func.default_note_aliases(title)
+          client:open_note(note, { sync = true })
+          client:write_note_to_buffer(note)
+        end)
+      end,
+      mode = "n",
+      desc = "Create a new Obsidian note"
+    },
+  },
 }
 
 M.neorg = {
