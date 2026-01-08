@@ -63,8 +63,7 @@ return {
       return not config.is_plugin_disabled("formatter")
     end,
     opts = function()
-      return {
-        tempfile_dir = "/tmp",
+      local opts = {
         filetype = {
           typescript = {
             require("formatter.filetypes.typescript").prettier,
@@ -98,6 +97,17 @@ return {
           },
         }
       }
+      --- Make all formatters use /tmp for tempfile_dir.
+      for ft, formatter in pairs(opts.filetype) do
+        opts.filetype[ft] = {
+          function()
+            local cfg = formatter[1]()
+            cfg.tempfile_dir = "/tmp"
+            return cfg
+          end
+        }
+      end
+      return opts
     end,
   },
   {
