@@ -6,7 +6,7 @@ local keymaps = require("config.keymaps")
 
 return {
   {
-    "epwalsh/obsidian.nvim",
+    "obsidian-nvim/obsidian.nvim",
     version = "*",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -26,6 +26,7 @@ return {
     },
     keys = keymaps.obsidian.keys,
     opts = {
+      legacy_commands = false,
       workspaces = {
         {
           name = "obsidian",
@@ -42,34 +43,48 @@ return {
         },
       },
       attachments = {
-        img_folder = "attachments",
+        folder = "attachments",
       },
       note_id_func = function(title)
-        return require("util.obsidian").note_id(title)
+        return title
       end,
-      note_frontmatter_func = function(note)
-        local out = {
-          id = note.id,
-          created_at = tostring(os.date("%Y-%m-%d")),
-          aliases = note.aliases,
-          tags = note.tags,
-          categories = {},
-        }
-        -- `note.metadata` contains any manually added fields in the frontmatter.
-        -- So here we just make sure those fields are kept in the frontmatter.
-        if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-          for k, v in pairs(note.metadata) do
-            out[k] = v
+      frontmatter = {
+        func = function(note)
+          local out = {
+            aliases = note.aliases,
+            categories = {},
+          }
+          if note.tags ~= nil and #note.tags > 0 then
+            out.tags = note.tags
           end
-        end
-        return out
-      end,
+          -- `note.metadata` contains any manually added fields in the frontmatter.
+          -- So here we just make sure those fields are kept in the frontmatter.
+          if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+            for k, v in pairs(note.metadata) do
+              out[k] = v
+            end
+          end
+          return out
+        end,
+      },
       templates = {
-        folder = "templates",
+        folder = "nvim-templates",
         date_format = "%Y-%m-%d",
         time_format = "%H:%M",
+        substitutions = {
+          today_week = function()
+            return os.date("%Y-W%V")
+          end,
+          week_start_date = function()
+            local current_time = os.time()
+            local day_of_week_iso = tonumber(os.date("%u", current_time)) -- 1 (Mon) to 7 (Sun)
+            local days_to_subtract = day_of_week_iso - 1
+            local seconds_in_day = 60 * 60 * 24
+            local first_day_time = current_time - (days_to_subtract * seconds_in_day)
+            return os.date("%B %-e, %Y", first_day_time)
+          end
+        }
       },
-      follow_url_func = vim.ui.open,
       completion = {
         min_chars = 0,
       }

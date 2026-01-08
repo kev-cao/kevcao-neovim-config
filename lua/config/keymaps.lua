@@ -3,7 +3,6 @@
 -- Note: except for autocomplete keymaps, which are found in plugins/cmp.lua
 
 local func = require("util.func")
-local config = require("util.config")
 
 local M = {}
 
@@ -1334,25 +1333,25 @@ M.obsidian = {
   bufkeys = {
     {
       "<localleader>o",
-      "<cmd>ObsidianOpen<CR>",
+      "<cmd>Obsidian open<CR>",
       mode = "n",
       desc = "Open note in Obsidian",
     },
     {
       "<localleader>h",
-      "<cmd>ObsidianTOC<CR>",
+      "<cmd>Obsidian toc<CR>",
       mode = "n",
       desc = "Show table of contents"
     },
     {
       "<localleader>t",
-      "<cmd>ObsidianTemplate<CR>",
+      "<cmd>Obsidian template<CR>",
       mode = "n",
       desc = "Insert a template into current note",
     },
     {
       "<localleader>l",
-      "<cmd>ObsidianLinks<CR>",
+      "<cmd>Obsidian links<CR>",
       mode = "n",
       desc = "List links in current note",
     },
@@ -1361,7 +1360,7 @@ M.obsidian = {
       function()
         vim.ui.input({ prompt = "Image name: " }, function(input)
           if input then
-            vim.cmd("ObsidianPasteImage " .. input)
+            vim.cmd("Obsidian paste_image " .. input)
           end
         end)
       end,
@@ -1375,7 +1374,7 @@ M.obsidian = {
           if input then
             vim.ui.input({ prompt = "Rename current note to '" .. input .. "'? (y/n): " }, function(confirm)
               if confirm == "y" or confirm == "Y" then
-                vim.cmd("ObsidianRename " .. input)
+                vim.cmd("Obsidian rename " .. input)
               else
                 vim.notify("Aborted note rename.", vim.log.levels.INFO)
               end
@@ -1388,27 +1387,21 @@ M.obsidian = {
     },
     {
       "gr",
-      "<cmd>ObsidianBacklinks<CR>",
+      "<cmd>Obsidian backlinks<CR>",
       mode = "n",
       desc = "Show backlinks to current note",
     },
-    {
-      "<M-d>",
-      require("util.obsidian").insert_todays_date,
-      mode = "i",
-      desc = "Insert today's date",
-    }
   },
   keys = {
     {
       "<leader>os",
-      "<cmd>ObsidianQuickSwitch<CR>",
+      "<cmd>Obsidian quick_switch<CR>",
       mode = "n",
       desc = "Search Obsidian notes",
     },
     {
       "<leader>or",
-      "<cmd>ObsidianSearch<CR>",
+      "<cmd>Obsidian search<CR>",
       mode = "n",
       desc = "Search in Obsidian notes",
     },
@@ -1418,6 +1411,12 @@ M.obsidian = {
       mode = "n",
       desc = "Create a new Obsidian note"
     },
+    {
+      "<leader>ot",
+      require("util.obsidian").goto_or_create_weekly_todo,
+      mode = "n",
+      desc = "Go to weekly todo",
+    }
   },
 }
 

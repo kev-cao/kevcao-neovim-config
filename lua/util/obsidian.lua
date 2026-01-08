@@ -39,6 +39,42 @@ local function query_directory(dir, cb)
   end)
 end
 
+--- Prompts the user to select a template for a new note.
+--- @param cb fun(template: string|nil) Callback function to call with the 
+--- selected template. Empty string is returned if no template, nil if aborted.
+local function query_template(cb)
+  local obsidian = require("obsidian")
+  local fs = require("plenary.scandir")
+  local template_dir = tostring(obsidian.api.templates_dir())
+  local templates = {}
+  for _, path in ipairs(fs.scan_dir(template_dir)) do
+    local template = path:sub(#template_dir + 2)
+    if not vim.endswith(template, ".md") then
+      goto continue
+    end
+    template = template:sub(1, #template - 3)
+    table.insert(templates, template)
+    ::continue::
+  end
+  if #templates == 0 then
+    cb(nil)
+    return
+  end
+
+  local choices = vim.list_extend({ "No template" }, templates)
+  vim.ui.select(choices, {
+    prompt = "Select template for new note:",
+  }, function(choice)
+    if choice == nil then
+      cb(nil)
+    elseif choice == "No template" then
+      cb("")
+    else
+      cb(choice)
+    end
+  end)
+end
+
 --- Normalizes an Obsidian note title to be a valid file name.
 --- @param title string|nil The title of the note.
 --- @return string The normalized note title.
@@ -99,22 +135,34 @@ end
 
 --- Creates a new Obsidian note, prompting the user for the directory and title.
 --- Opens the new note in a buffer without writing it to disk yet.
---- @param opts obsidian.CreateNoteOpts Options for creating the note.
+--- @param opts obsidian.note.NoteOpts Options for creating the note.
 --- @return nil
 function M.create_new_note(opts)
-  local client = require("obsidian").get_client()
+  local obsidian = require("obsidian")
   local obsidian_path = config.get_local(
     "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
   )
-  local aborted = function()
+  local abort = function()
     vim.notify("Aborted note creation.", vim.log.levels.INFO)
   end
-  query_directory(obsidian_path, function(dir)
+
+  local async = require("plenary.async")
+  local query_dir_async = async.wrap(query_directory, 2)
+  local query_template_async = async.wrap(query_template, 1)
+
+  async.void(function()
+    local template, _ = query_template_async()
+    if template == nil then
+      abort()
+      return
+    elseif template == "" then
+      template = nil
+    end
+    local dir, _ = query_dir_async(obsidian_path)
     if dir == nil then
-      aborted()
+      abort()
       return
     end
-
     local title = nil
     vim.ui.input({ prompt = "Note name: " }, function(input)
       if input then
@@ -122,41 +170,60 @@ function M.create_new_note(opts)
       end
     end)
     if title == nil then
-      aborted()
+      abort()
       return
     end
     local normalized_title = M.normalize_note_title(title)
 
     local choice = vim.fn.confirm("Add timestamp to title?", "&Yes\n&No\n&Cancel", 3)
     if choice == 3 then
-      vim.notify("Aborted note creation.", vim.log.levels.INFO)
+      abort()
       return
     elseif choice == 1 then
       normalized_title = M.note_id(normalized_title)
     end
 
     local create_opts = {
+      id = normalized_title,
       title = normalized_title,
+      verbatim = true,
       dir = dir,
-      no_write = true,
-      template = "note",
+      template = template,
+      insert_frontmatter = template == nil,
+      aliases = M.default_note_aliases(title),
+      should_write = true,
     }
     vim.tbl_extend("keep", create_opts, opts or {})
-    local note = client:create_note(create_opts)
-    --- Have to append the aliases separately or else Obsidian.nvim adds
-    --- its own.
-    vim.list_extend(note.aliases, M.default_note_aliases(title))
-    client:open_note(note, { sync = true })
-    client:write_note_to_buffer(note, { template = create_opts.template })
-  end)
+    local note = obsidian.Note.create(create_opts)
+    note:open({ sync = true })
+  end)()
 end
 
---- Inserts the current date at the cursor position in "Month Day, Year" format.
---- @return nil
-function M.insert_todays_date()
-  local date_format = "%B %-e, %Y"
-  local date_str = tostring(os.date(date_format))
-  vim.api.nvim_put({ date_str }, "c", true, true)
+--- Opens the weekly todo note for the current week, creating it if it does not
+--- exist.
+function M.goto_or_create_weekly_todo()
+  local obsidian = require("obsidian")
+  local obsidian_path = config.get_local(
+    "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
+  )
+  local todo_filename = "todo-weekly-" .. os.date("%Yw%V")
+  local todo_path = obsidian_path .. "/" .. todo_filename .. ".md"
+  if vim.fn.filereadable(todo_path) == 1 then
+    local note = obsidian.Note.from_file(todo_path)
+    note:open({ sync = true })
+  else
+    local note = obsidian.Note.create({
+      id = todo_filename,
+      title = todo_filename,
+      verbatim = true,
+      dir = obsidian_path,
+      should_write = true,
+      insert_frontmatter = false,
+      template = "weekly-todo-tmpl",
+    })
+    note:open({ sync = true })
+    note:write_to_buffer({ template = "weekly-todo-tmpl" })
+  end
 end
 
 return M
