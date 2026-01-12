@@ -40,7 +40,7 @@ local function query_directory(dir, cb)
 end
 
 --- Prompts the user to select a template for a new note.
---- @param cb fun(template: string|nil) Callback function to call with the 
+--- @param cb fun(template: string|nil) Callback function to call with the
 --- selected template. Empty string is returned if no template, nil if aborted.
 local function query_template(cb)
   local obsidian = require("obsidian")
@@ -222,7 +222,6 @@ function M.goto_or_create_weekly_todo()
       template = "weekly-todo-tmpl",
     })
     note:open({ sync = true })
-    note:write_to_buffer({ template = "weekly-todo-tmpl" })
   end
 end
 
