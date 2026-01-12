@@ -199,9 +199,93 @@ function M.create_new_note(opts)
   end)()
 end
 
+
+--- Computes the file path for the weekly todo note for a given date.
+--- @param date string The date in "YYYY-MM-DD" format.
+--- @return string The file path for the weekly todo note.
+local function weekly_todo_path(date)
+  local year, month, day = string.match(date, "^(%d%d%d%d)%-(%d%d)%-(%d%d)$")
+  year = tonumber(year)
+  month = tonumber(month)
+  day = tonumber(day)
+  local time = os.time({ year = year, month = month, day = day })
+  local week = tostring(os.date("%Yw%V", time))
+  local todo_filename = "todo-weekly-" .. week
+  local obsidian_path = config.get_local(
+    "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
+  )
+  local todo_path = obsidian_path .. "/" .. todo_filename .. ".md"
+  return todo_path
+end
+
+--- Lists all weekly todos in a Fzf picker for the window to choose from.
+function M.list_weekly_todos()
+  local dateutil = require("util.date")
+  local obsidian = require("obsidian")
+  local obsidian_path = config.get_local(
+      "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
+  )
+  --- List files that start with "todo-weekly-"
+  local dates = {}
+  local dateToFile = {}
+  for _, file in ipairs(vim.fn.globpath(
+    obsidian_path, "todo-weekly-*.md", false, true
+  )) do
+    local filename = vim.fn.fnamemodify(file, ":t:r")
+    local year_week = filename:sub(#"todo-weekly-" + 1)
+    local year, week = string.match(year_week, "^(%d%d%d%d)w(%d%d)$")
+    year = tonumber(year)
+    week = tonumber(week)
+    local date = dateutil.week_to_date(year, week, "%Y-%m-%d")
+    table.insert(dates, 0, date)
+    dateToFile[date] = file
+  end
+
+  local fzf = require("fzf-lua")
+  local builtin_previewer = require("fzf-lua.previewer.builtin")
+  local todo_previewer = builtin_previewer.buffer_or_file:extend()
+  function todo_previewer:new(o, opts, fzf_win)
+    todo_previewer.super.new(self, o, opts, fzf_win)
+    setmetatable(self, todo_previewer)
+    return self
+  end
+  function todo_previewer:parse_entry(entry)
+    return {
+      path = weekly_todo_path(entry),
+      line = 1,
+      col = 1,
+    }
+  end
+
+  fzf.fzf_exec(dates, {
+    prompt = "Select Weekly Todo Date>",
+    previewer = todo_previewer,
+    fzf_opts = {
+      ["--preview-window"] = "nohidden,down,60%",
+    },
+    actions = {
+      ["default"] = function(selected)
+        local date = selected[1]
+        local note = obsidian.Note.from_file(dateToFile[date])
+        note:open({ sync = true })
+      end,
+      ["ctrl-v"] = function(selected)
+        local date = selected[1]
+        local note = obsidian.Note.from_file(dateToFile[date])
+        note:open({ sync = true, open_strategy = "vsplit" })
+      end,
+      ["ctrl-s"] = function(selected)
+        local date = selected[1]
+        local note = obsidian.Note.from_file(dateToFile[date])
+        note:open({ sync = true, open_strategy = "hsplit" })
+      end,
+    }
+  })
+end
+
 --- Opens the weekly todo note for the current week, creating it if it does not
 --- exist.
-function M.goto_or_create_weekly_todo()
+function M.goto_or_create_todays_weekly_todo()
   local obsidian = require("obsidian")
   local obsidian_path = config.get_local(
     "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")

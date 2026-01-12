@@ -24,6 +24,7 @@ M.groups = {
   { "<leader>c", group = "Claude AI", icon = { icon = "󱚤", color = "green" } },
   { "<leader>S", group = "Sessions", icon = { icon = "󱫭", color = "green" } },
   { "<leader>o", group = "Obsidian", icon = { icon = "󱓧", color = "green" } },
+  { "<leader>ot", group = "Weekly Todos", icon = { icon = "", color = "green" } },
   { "<leader>f", group = "Filesystem", icon = { icon = "", color = "green" } },
 }
 
@@ -1412,11 +1413,17 @@ M.obsidian = {
       desc = "Create a new Obsidian note"
     },
     {
-      "<leader>ot",
-      require("util.obsidian").goto_or_create_weekly_todo,
+      "<leader>ott",
+      require("util.obsidian").goto_or_create_todays_weekly_todo,
       mode = "n",
       desc = "Go to weekly todo",
-    }
+    },
+    {
+      "<leader>otl",
+      require("util.obsidian").list_weekly_todos,
+      mode = "n",
+      desc = "List weekly todos",
+    },
   },
 }
 
