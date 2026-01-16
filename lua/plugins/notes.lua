@@ -54,7 +54,7 @@ return {
             aliases = note.aliases,
             categories = {},
           }
-          if note.tags ~= nil and #note.tags > 0 then
+          if note.tags ~= nil then
             out.tags = note.tags
           end
           -- `note.metadata` contains any manually added fields in the frontmatter.
