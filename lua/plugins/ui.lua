@@ -7,6 +7,9 @@ local keymaps = require("config.keymaps")
 return {
   {
     "sindrets/winshift.nvim",
+    cond = function()
+      return not config.is_plugin_disabled("winshift")
+    end,
     keys = keymaps.winshift.keys,
   },
   {
@@ -69,6 +72,9 @@ return {
         AlphaFooter = { fg = "#FF9E64" },
       },
     },
+    cond = function()
+      return not config.is_plugin_disabled("onedark")
+    end,
     config = function(_, opts)
       require("onedark").setup(opts)
       vim.cmd([[colorscheme onedark]])

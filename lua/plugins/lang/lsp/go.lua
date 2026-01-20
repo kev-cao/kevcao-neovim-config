@@ -39,7 +39,7 @@ return {
           "-**/_bazel",
           "-**/bazel-bin",
           "-**/bazel-out",
-          "-**bazel-testlogs",
+          "-**/bazel-testlogs",
           "-**/vendor",
           "-**/inflight_trace_dump",
           "-pkg/sql/colexec",
