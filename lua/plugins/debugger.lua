@@ -17,7 +17,6 @@ return {
           scopes = {
             keymap = "A",
             label = "Scopes [A]",
-            short_label = "󰂥 [S]",
           },
         },
         default_section = "scopes",
