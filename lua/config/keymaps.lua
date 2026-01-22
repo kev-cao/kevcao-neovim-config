@@ -10,6 +10,7 @@ M.groups = {
   { "gp", group = "Goto with preview", icon = { icon = "", color = "green" } },
   { "<leader>s", group = "Search" },
   { "<leader>g", group = "Git", icon = { icon = "", color = "green" } },
+  { "<localleader>g", group = "Git", icon = { icon = "", color = "green" } },
   { "<leader>d", group = "Debugger", icon = { icon = "󰨰", color = "blue" } },
   { "<leader><S-t>", group = "Tests", icon = { icon = "", color = "blue" } },
   { "<leader>t", group = "Terminal" },
@@ -123,6 +124,28 @@ M.general = {
       "<cmd>nohlsearch | diffupdate | normal! <C-l><CR>",
       mode = { "n", "i", "v" },
       desc = "Clear highlights and redraw screen",
+    },
+    {
+      "<localleader>gh",
+      function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local filename = vim.api.nvim_buf_get_name(bufnr)
+        local row = vim.api.nvim_win_get_cursor(0)[1]
+        -- Use --porcelain to get machine-readable output and extract the hash
+        local blame_info = vim.fn.systemlist('git blame -L ' .. row .. ',+1 --porcelain -- ' .. filename)
+
+        if #blame_info >= 1 then
+          -- The first line of porcelain output contains the hash
+          local hash = string.sub(blame_info[1], 1, 40) -- Get full SHA
+          -- Copy to clipboard
+          vim.fn.setreg('+', hash)
+          vim.notify("Copied commit hash: " .. string.sub(hash, 1, 8), vim.log.levels.INFO) -- Print a truncated hash for confirmation
+        else
+          print("Could not get git blame info", vim.log.levels.ERROR)
+        end
+      end,
+      mode = "n",
+      desc = "Copy git blame hash for current line",
     }
   },
 }
@@ -712,7 +735,7 @@ M.fugitive = {
       -- Visual mode selection marks are only set AFTER leaving visual mode.
       -- <Cmd> keeps you in the same mode, so we have to use : instead, which
       -- exits you from visual mode.
-      "<leader>gl",
+      "<localleader>gl",
       ":'<,'>GBrowse!<CR>",
       mode = "x",
       desc = "Copy GitHub URL for selection",
@@ -851,19 +874,19 @@ M.gitsigns = {
       desc = "Toggle show Git signs",
     },
     {
-      "<leader>gd",
+      "<localleader>gd",
       "<cmd>Gitsigns toggle_word_diff<CR>",
       mode = "n",
       desc = "Toggle intra-line word-diff for this buffer",
     },
     {
-      "<leader>g<S-b>",
+      "<localleader>g<S-b>",
       "<cmd>Gitsigns blame<CR>",
       mode = "n",
       desc = "Show Git blame",
     },
     {
-      "<leader>gb",
+      "<localleader>gb",
       "<cmd>Gitsigns blame_line<CR>",
       mode = "n",
       desc = "Show Git blame for current line",
