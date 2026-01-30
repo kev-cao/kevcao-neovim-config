@@ -29,6 +29,7 @@ return {
         "markdown",
         "markdown_inline",
         "toml",
+        "proto",
       },
     },
     config = function(_, opts)

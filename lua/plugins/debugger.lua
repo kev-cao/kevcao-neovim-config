@@ -16,7 +16,7 @@ return {
         base_sections = {
           scopes = {
             keymap = "A",
-            label = "Scopes [A]",
+            label = "Scopes",
           },
         },
         default_section = "scopes",
