@@ -42,6 +42,7 @@ return {
           go_test_args = {"-v"},
           warn_test_name_dupes = false,
         },
+        ["rustaceanvim.neotest"] = {},
       },
       discovery = {
         enabled = false,
