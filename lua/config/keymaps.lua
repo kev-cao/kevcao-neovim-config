@@ -1384,7 +1384,7 @@ M.obsidian = {
       function()
         vim.ui.input({ prompt = "Image name: " }, function(input)
           if input then
-            vim.cmd("Obsidian paste_image " .. input)
+            vim.cmd("Obsidian paste_img " .. input)
           end
         end)
       end,
