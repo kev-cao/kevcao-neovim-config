@@ -32,7 +32,7 @@ return {
         enable = true,
       },
       save_hook = function()
-        if not config.is_plugin_disabled("nvim_tree") then
+        if config.plugin_enabled("nvim_tree") then
           vim.cmd("NvimTreeFocus")
           vim.cmd("silent! bd")
         end
@@ -51,7 +51,7 @@ return {
       end,
     },
     cond = function()
-      return not config.is_plugin_disabled("nvim_possession")
+      return config.plugin_enabled("nvim_possession")
     end,
   },
 }

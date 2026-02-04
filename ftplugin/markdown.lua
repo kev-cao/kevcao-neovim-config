@@ -13,7 +13,7 @@ end
 vim.cmd("setlocal textwidth=100")
 
 local keymaps = require("config.keymaps")
-if not config.is_plugin_disabled("which-key") then
+if config.plugin_enabled("which-key") then
   local wk = require("which-key")
   local func = require("util.func")
   wk.add(func.make_buflocal(keymaps.obsidian.bufkeys))

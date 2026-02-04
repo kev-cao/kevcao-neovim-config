@@ -19,7 +19,7 @@ return {
     end,
     lazy = false,
     cond = function()
-      return not config.is_plugin_disabled("nvim-tree")
+      return config.plugin_enabled("nvim-tree")
     end,
     config = function()
       require("nvim-tree").setup()
@@ -28,7 +28,7 @@ return {
   {
     'stevearc/oil.nvim',
     cond = function()
-      return not config.is_plugin_disabled("oil")
+      return config.plugin_enabled("oil")
     end,
     ---@module 'oil'
     ---@type oil.SetupOpts

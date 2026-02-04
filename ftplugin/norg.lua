@@ -4,7 +4,7 @@ local keymaps = require("config.keymaps")
 
 vim.cmd("setlocal textwidth=100")
 
-if not config.is_plugin_disabled("which-key") then
+if config.plugin_enabled("which-key") then
   local wk = require("which-key")
   wk.add(func.make_buflocal(keymaps.neorg.bufgroups))
   wk.add(func.make_buflocal(keymaps.neorg.bufkeys))

@@ -14,7 +14,7 @@ return {
       vim.g.floaterm_height = 0.2
     end,
     cond = function()
-      return not config.is_plugin_disabled("floaterm")
+      return config.plugin_enabled("floaterm")
     end,
   },
 }

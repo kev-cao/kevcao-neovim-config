@@ -11,7 +11,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
-    cond = not config.is_plugin_disabled("obsidian.nvim"),
+    cond = config.plugin_enabled("obsidian.nvim"),
     lazy = true,
     event = {
       -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
@@ -98,7 +98,7 @@ return {
     },
     lazy = false,
     branch = "main",
-    cond = not config.is_plugin_disabled("neorg"),
+    cond = config.plugin_enabled("neorg"),
     opts = {
       load = {
         ["core.defaults"] = {},

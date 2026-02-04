@@ -9,10 +9,10 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   group = "lang",
   pattern = "*",
   callback = function()
-    if not config.is_plugin_disabled("linter") then
+    if config.plugin_enabled("linter") then
       require("lint").try_lint()
     end
-    if not config.is_plugin_disabled("formatter") then
+    if config.plugin_enabled("formatter") then
       vim.cmd("FormatWrite")
     end
   end,
@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "WinNew" }, {
   group = "git",
   pattern = "*",
   callback = function(args)
-    if not not config.is_plugin_disabled("fugitive") then
+    if not config.plugin_enabled("fugitive") then
       return
     end
     -- We schedule because we need the window to be populated with the buffer
@@ -61,7 +61,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
   group = "git",
   pattern = "*",
   callback = function(args)
-    if not not config.is_plugin_disabled("fugitive") then
+    if not config.plugin_enabled("fugitive") then
       return
     end
     -- We schedule because we need the window to be populated with the buffer

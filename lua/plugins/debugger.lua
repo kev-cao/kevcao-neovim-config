@@ -36,7 +36,7 @@ return {
       end
     end,
     cond = function()
-      return not config.is_plugin_disabled("dap-ui")
+      return config.plugin_enabled("dap-ui")
     end,
   },
   {
@@ -51,7 +51,7 @@ return {
     ft = "go",
     keys = keymaps.dapgo.keys,
     cond = function()
-      return not config.is_plugin_disabled("dap-ui")
+      return config.plugin_enabled("dap-ui")
     end,
   },
   {
@@ -63,7 +63,7 @@ return {
       vim.o.switchbuf = "useopen,uselast"
     end,
     cond = function()
-      return not config.is_plugin_disabled("dap-ui")
+      return config.plugin_enabled("dap-ui")
     end,
     config = function()
       local dap = require("dap")

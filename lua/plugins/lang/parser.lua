@@ -11,7 +11,7 @@ return {
     main = "nvim-treesitter.config",
     build = ":TSUpdate",
     cond = function()
-      return not config.is_plugin_disabled("treesitter")
+      return config.plugin_enabled("treesitter")
     end,
     opts = {
       ensure_installed = {
@@ -107,7 +107,7 @@ return {
       max_lines = 3,
     },
     cond = function()
-      return not config.is_plugin_disabled("treesitter")
+      return config.plugin_enabled("treesitter")
     end,
   },
 }

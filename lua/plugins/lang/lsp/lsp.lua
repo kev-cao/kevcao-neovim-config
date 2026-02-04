@@ -105,7 +105,7 @@ return {
     end,
     keys = keymaps.lsp.keys,
     cond = function()
-      return not config.is_plugin_disabled("lsp-config")
+      return config.plugin_enabled("lsp-config")
     end,
   },
   {
@@ -116,7 +116,7 @@ return {
       "neovim/nvim-lspconfig",
     },
     cond = function()
-      return not config.is_plugin_disabled("lsp-config")
+      return config.plugin_enabled("lsp-config")
     end,
   },
   {

@@ -14,7 +14,7 @@ return {
     },
     event = "InsertEnter",
     cond = function()
-      return not config.is_plugin_disabled("cmp")
+      return config.plugin_enabled("cmp")
     end,
     opts = function()
       local cmp = require("cmp")
@@ -112,7 +112,7 @@ return {
       "hrsh7th/nvim-cmp",
     },
     cond = function()
-      return not config.is_plugin_disabled("snippet")
+      return config.plugin_enabled("snippet")
     end,
   },
   {

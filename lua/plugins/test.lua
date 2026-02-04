@@ -20,7 +20,7 @@ return {
       require("nvim-test").setup(opts)
     end,
     cond = function()
-      return not config.is_plugin_disabled("nvim-test")
+      return config.plugin_enabled("nvim-test")
     end,
   },
   {
@@ -33,7 +33,7 @@ return {
       "fredrikaverpil/neotest-golang",
     },
     cond = function()
-      return not config.is_plugin_disabled("neotest")
+      return config.plugin_enabled("neotest")
     end,
     keys = keymaps.neotest.keys,
     opts = {

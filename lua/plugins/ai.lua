@@ -1,7 +1,6 @@
 --- @module 'plugins.ai'
 --- All AI related plugins
 
-local func = require("util.func")
 local keymaps = require("config.keymaps")
 local config  = require("util.config")
 
@@ -10,7 +9,7 @@ return {
     "zbirenbaum/copilot.lua",
     event = { "InsertEnter" },
     cond = function()
-      return not config.is_plugin_disabled("copilot")
+      return config.plugin_enabled("copilot")
     end,
     keys = keymaps.copilot.keys,
     opts = {
@@ -41,8 +40,8 @@ return {
       }
     },
     cond = function()
-      return config.get_local("ai_assistant", nil) == "claude" and not
-        config.is_plugin_disabled("claude-code")
+      return config.get_local("ai_assistant", nil) == "claude" and
+        config.plugin_enabled("claude-code")
     end,
     config = function(_, opts)
       require("claude-code").setup(opts)
@@ -55,8 +54,8 @@ return {
     },
     keys = keymaps.opencode.keys,
     cond = function()
-      return config.get_local("ai_assistant", nil) == "opencode" and not
-        config.is_plugin_disabled("opencode")
+      return config.get_local("ai_assistant", nil) == "opencode" and
+        config.plugin_enabled("opencode")
     end,
     init = function()
       vim.o.autoread = true

@@ -36,7 +36,7 @@ return {
       vim.cmd("FzfLua register_ui_select")
     end,
     cond = function()
-      return not config.is_plugin_disabled("fzf")
+      return config.plugin_enabled("fzf")
     end,
   },
 }

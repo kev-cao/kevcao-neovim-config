@@ -12,7 +12,7 @@ return {
       "kevinhwang91/promise-async",
     },
     cond = function()
-      return not config.is_plugin_disabled("folding")
+      return config.plugin_enabled("folding")
     end,
     -- Uses default Neovim keys for folding.
     opts = {
@@ -60,7 +60,7 @@ return {
   {
     "mhartington/formatter.nvim",
     cond = function()
-      return not config.is_plugin_disabled("formatter")
+      return config.plugin_enabled("formatter")
     end,
     opts = function()
       local opts = {
@@ -117,7 +117,7 @@ return {
       "rmagatti/logger.nvim",
     },
     cond = function()
-      return not config.is_plugin_disabled("goto-preview")
+      return config.plugin_enabled("goto-preview")
     end,
     opts = {
       default_mappings = false,
@@ -135,7 +135,7 @@ return {
     },
     cmd = { "LiveShareServer", "LiveShareJoin" },
     cond = function()
-      return not config.is_plugin_disabled("live-share")
+      return config.plugin_enabled("live-share")
     end,
     opts = {
       service = "serveo.net",
@@ -149,7 +149,7 @@ return {
     "chentoast/marks.nvim",
     event = "BufReadPre",
     cond = function()
-      return not config.is_plugin_disabled("marks")
+      return config.plugin_enabled("marks")
     end,
     opts = vim.tbl_deep_extend("force", config_opts.marks.opts, {
       default_mappings = false,
@@ -162,7 +162,7 @@ return {
   {
     "windwp/nvim-ts-autotag",
     cond = function()
-      return not config.is_plugin_disabled("autotag")
+      return config.plugin_enabled("autotag")
     end,
     config = function()
       require("nvim-ts-autotag").setup()
@@ -171,7 +171,7 @@ return {
   {
     "tpope/vim-sleuth",
     cond = function()
-      return not config.is_plugin_disabled("sleuth")
+      return config.plugin_enabled("sleuth")
     end,
   },
   {
@@ -211,7 +211,7 @@ return {
       },
     },
     cond = function()
-      return not config.is_plugin_disabled("todo-comments")
+      return config.plugin_enabled("todo-comments")
     end,
     config = function(_, opts)
       -- Unfortunately this plugin does not support case insensitivity, so
@@ -246,7 +246,7 @@ return {
       { "ibhagwan/fzf-lua" },
     },
     cond = function()
-      return not config.is_plugin_disabled("neoclip")
+      return config.plugin_enabled("neoclip")
     end,
     keys = keymaps.neoclip.keys,
     opts = {
@@ -260,7 +260,7 @@ return {
     "echasnovski/mini.surround",
     version = "*",
     cond = function()
-      return not config.is_plugin_disabled("mini.surround")
+      return config.plugin_enabled("mini.surround")
     end,
     opts = {
       mappings = {
@@ -288,7 +288,7 @@ return {
       }
     },
     cond = function()
-      return not config.is_plugin_disabled("lexima")
+      return config.plugin_enabled("lexima")
     end,
     config = function(_, opts)
       for _, rule in pairs(opts.custom_rules) do
@@ -299,13 +299,13 @@ return {
   {
     "tpope/vim-fugitive",
     cond = function()
-      return not config.is_plugin_disabled("fugitive")
+      return config.plugin_enabled("fugitive")
     end,
   },
   {
     "xiyaowong/virtcolumn.nvim",
     cond = function()
-      return not config.is_plugin_disabled("virtcolumn")
+      return config.plugin_enabled("virtcolumn")
     end,
     init = function()
       vim.g.virtcolumn_char = " |"

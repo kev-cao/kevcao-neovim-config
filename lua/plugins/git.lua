@@ -13,7 +13,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     cond = function()
-      return not config.is_plugin_disabled("octo")
+      return config.plugin_enabled("octo")
     end,
     keys = keymaps.octo.keys,
     opts = {
@@ -35,7 +35,7 @@ return {
       { "nvim-lua/plenary.nvim" },
     },
     cond = function()
-      return not config.is_plugin_disabled("lazygit")
+      return config.plugin_enabled("lazygit")
     end,
     keys = keymaps.lazygit.keys,
   },
@@ -43,7 +43,7 @@ return {
     "tpope/vim-fugitive",
     keys = keymaps.fugitive.keys,
     cond = function()
-      return not config.is_plugin_disabled("fugitive")
+      return config.plugin_enabled("fugitive")
     end,
   },
   {
@@ -52,7 +52,7 @@ return {
       { "tpope/vim-fugitive" },
     },
     cond = function()
-      return not config.is_plugin_disabled("fugitive")
+      return config.plugin_enabled("fugitive")
     end,
   },
   {
@@ -63,7 +63,7 @@ return {
       require("gitsigns").setup()
     end,
     cond = function()
-      return not config.is_plugin_disabled("gitsigns")
+      return config.plugin_enabled("gitsigns")
     end,
   },
 }

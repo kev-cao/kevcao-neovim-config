@@ -29,29 +29,31 @@ function M.get_local(key, default)
   return local_config[key] or default
 end
 
---- Checks if a plugin is disabled. Local configurations in config/local.lua
+--- Checks if a plugin is enabled. Local configurations in config/local.lua
 --- are checked first before falling back to global variables defined in
 --- config/general.lua.
 --- @param plugin string: The name of the plugin to check.
---- @return boolean: True if the plugin is disabled, false otherwise.
-function M.is_plugin_disabled(plugin)
+--- @return boolean: True if the plugin is enabled, false otherwise.
+function M.plugin_enabled(plugin)
+  -- Fallback to global settings
+  local global_var = "use_" .. plugin:gsub("[-.]", "_")
+  local fallback = vim.g[global_var]
+  if fallback == nil then
+    -- Default all pluginns to enabled.
+    fallback = true
+  end
+
   local ok, local_config = pcall(require, "config.local")
   if not ok then
-    return false
+    return fallback
   end
   if local_config.disabled_plugins ~= nil then
     if local_config.disabled_plugins[plugin] ~= nil then
-      return local_config.disabled_plugins[plugin]
+      return not local_config.disabled_plugins[plugin]
     end
   end
-  -- Fallback to global settings
-  local global_var = "use_" .. plugin:gsub("[-.]", "_")
-  local use_plugin = vim.g[global_var]
-  if use_plugin == false then
-    return true
-  end
-  -- Default to all plugins being enabled
-  return false
+
+  return fallback
 end
 
 return M

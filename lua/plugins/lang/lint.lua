@@ -11,7 +11,7 @@ return {
     lazy = true,
     event = { "BufReadPre", "BufNewFile" },
     cond = function()
-      return not config.is_plugin_disabled("nvim-lint")
+      return config.plugin_enabled("nvim-lint")
     end,
     opts = function()
       local opts = {}

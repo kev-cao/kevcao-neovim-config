@@ -8,7 +8,7 @@ return {
   {
     "sindrets/winshift.nvim",
     cond = function()
-      return not config.is_plugin_disabled("winshift")
+      return config.plugin_enabled("winshift")
     end,
     keys = keymaps.winshift.keys,
   },
@@ -20,7 +20,7 @@ return {
       "gennaro-tedesco/nvim-possession",
     },
     cond = function()
-      return not config.is_plugin_disabled("alpha")
+      return config.plugin_enabled("alpha")
     end,
     config = function()
       local alpha = require("alpha")
@@ -53,7 +53,7 @@ return {
     "catgoose/nvim-colorizer.lua",
     event = "BufReadPre",
     cond = function()
-      return not config.is_plugin_disabled("colorizer")
+      return config.plugin_enabled("colorizer")
     end,
     config = function()
       require("colorizer").setup()
@@ -73,7 +73,7 @@ return {
       },
     },
     cond = function()
-      return not config.is_plugin_disabled("onedark")
+      return config.plugin_enabled("onedark")
     end,
     config = function(_, opts)
       require("onedark").setup(opts)
@@ -156,7 +156,7 @@ return {
       },
     },
     cond = function()
-      return not config.is_plugin_disabled("lualine")
+      return config.plugin_enabled("lualine")
     end,
   },
   {
@@ -173,7 +173,7 @@ return {
       wk.add(keymaps.groups)
     end,
     cond = function()
-      return not config.is_plugin_disabled("which-key")
+      return config.plugin_enabled("which-key")
     end,
   },
   {
@@ -188,7 +188,7 @@ return {
       require("neoscroll").setup(opts)
     end,
     cond = function()
-      return not config.is_plugin_disabled("neoscroll")
+      return config.plugin_enabled("neoscroll")
     end,
   },
   {
@@ -220,7 +220,7 @@ return {
       require("noice").setup(opts)
     end,
     cond = function()
-      return not config.is_plugin_disabled("noice")
+      return config.plugin_enabled("noice")
     end,
   },
 }
