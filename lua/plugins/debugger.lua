@@ -86,14 +86,8 @@ return {
           name = "Attach remote",
           mode = "remote",
           request = "attach",
-          port = 38697,
+          port = 2345,
           host = "127.0.0.1",
-          substitutePath = {
-            {
-              from = "/Users/kevin/go/src/github.com/cockroachdb/cockroach",
-              to = "",
-            },
-          },
         },
       }
 
