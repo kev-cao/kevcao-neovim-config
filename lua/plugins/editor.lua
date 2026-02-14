@@ -89,6 +89,9 @@ return {
               end
             end
           },
+          rust = {
+            require("formatter.filetypes.rust").rustfmt,
+          },
           terraform = {
             require("formatter.filetypes.terraform").tofufmt,
           },
