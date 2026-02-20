@@ -1647,6 +1647,12 @@ M.claude = {
       "<cmd>ClaudeCode<CR>",
       mode = "n",
       desc = "Toggle Claude Code",
+    },
+    {
+      "<leader>cr",
+      "<cmd>ClaudeCodeResume<CR>",
+      mode = "n",
+      desc = "Resume Claude Session",
     }
   }
 }
