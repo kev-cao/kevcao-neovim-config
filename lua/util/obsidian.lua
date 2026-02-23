@@ -195,7 +195,7 @@ function M.create_new_note(opts)
     }
     vim.tbl_extend("keep", create_opts, opts or {})
     local note = obsidian.Note.create(create_opts)
-    note:open({ sync = true })
+    note:open({ sync = false })
   end)()
 end
 
