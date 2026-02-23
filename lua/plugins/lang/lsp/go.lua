@@ -34,6 +34,7 @@ return {
     single_file_support = true,
     settings = {
       gopls = {
+        buildFlags = { "-mod=readonly" },
         directoryFilters = {
           "-**/node_modules",
           "-**/_bazel",
