@@ -67,6 +67,7 @@ return {
     end,
     config = function()
       local dap = require("dap")
+      local sys = require("util.sys")
       dap.configurations.go = {
         {
           type = "go",
@@ -96,7 +97,7 @@ return {
         host = "127.0.0.1",
         port = "${port}",
         executable = {
-          command = "/Users/kevin/.local/share/nvim/mason/bin/codelldb",
+          command = sys.which("codelldb"),
           args = { "--port", "${port}" },
         },
       }
