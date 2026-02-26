@@ -23,7 +23,7 @@ local M = {}
 --- @return LocalConfig<K>: The value of the local configuration variable, or the default value.
 function M.get_local(key, default)
   local ok, local_config = pcall(require, "config.local")
-  if not ok then
+  if not ok or local_config == true then
     return default
   end
   return local_config[key] or default
@@ -44,7 +44,7 @@ function M.plugin_enabled(plugin)
   end
 
   local ok, local_config = pcall(require, "config.local")
-  if not ok then
+  if not ok or local_config == true then
     return fallback
   end
   if local_config.disabled_plugins ~= nil then
