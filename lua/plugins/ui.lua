@@ -193,6 +193,7 @@ return {
   },
   {
     "folke/noice.nvim",
+    keys = keymaps.noice.keys,
     event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",

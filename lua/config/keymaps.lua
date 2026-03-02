@@ -1806,4 +1806,15 @@ M.oil = {
   },
 }
 
+M.noice = {
+  keys = {
+    {
+      "<leader><BS>",
+      "<cmd>Noice dismiss<CR>",
+      mode = "n",
+      desc = "Dismiss messages",
+    }
+  }
+}
+
 return M
