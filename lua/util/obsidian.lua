@@ -139,9 +139,7 @@ end
 --- @return nil
 function M.create_new_note(opts)
   local obsidian = require("obsidian")
-  local obsidian_path = config.get_local(
-    "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
-  )
+  local obsidian_path = M.get_obsidian_vault_path()
   local abort = function()
     vim.notify("Aborted note creation.", vim.log.levels.INFO)
   end
@@ -211,9 +209,7 @@ local function weekly_todo_path(date)
   local time = os.time({ year = year, month = month, day = day })
   local week = tostring(os.date("%Yw%V", time))
   local todo_filename = "todo-weekly-" .. week
-  local obsidian_path = config.get_local(
-    "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
-  )
+  local obsidian_path = M.get_obsidian_vault_path()
   local todo_path = obsidian_path .. "/" .. todo_filename .. ".md"
   return todo_path
 end
@@ -222,9 +218,7 @@ end
 function M.list_weekly_todos()
   local dateutil = require("util.date")
   local obsidian = require("obsidian")
-  local obsidian_path = config.get_local(
-      "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
-  )
+  local obsidian_path = M.get_obsidian_vault_path()
   --- List files that start with "todo-weekly-"
   local dates = {}
   local dateToFile = {}
@@ -287,9 +281,7 @@ end
 --- exist.
 function M.goto_or_create_todays_weekly_todo()
   local obsidian = require("obsidian")
-  local obsidian_path = config.get_local(
-    "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
-  )
+  local obsidian_path = M.get_obsidian_vault_path()
   local todo_filename = "todo-weekly-" .. os.date("%Yw%V")
   local todo_path = obsidian_path .. "/" .. todo_filename .. ".md"
   if vim.fn.filereadable(todo_path) == 1 then
@@ -307,6 +299,14 @@ function M.goto_or_create_todays_weekly_todo()
     })
     note:open({ sync = true })
   end
+end
+
+--- Gets the canonical path to the Obsidian vault from the configuration.
+--- @return string The canonical path to the Obsidian vault.
+function M.get_obsidian_vault_path()
+  return vim.fn.expand(config.get_local(
+    "obsidian_vault_path", "~/Documents/obsidian"
+  ))
 end
 
 return M

@@ -1,9 +1,8 @@
 local config = require("util.config")
+local obsidian = require("util.obsidian")
 
 local curr_file = vim.fn.expand("%:p")
-local obsidian_vault = config.get_local(
-  "obsidian_vault_path", vim.fn.expand("~/Documents/obsidian")
-)
+local obsidian_vault = obsidian.get_obsidian_vault_path()
 local obsidian_pattern = vim.fn.glob2regpat(obsidian_vault .. "/*.md")
 
 if vim.fn.match(curr_file, obsidian_pattern) == -1 then
