@@ -261,17 +261,17 @@ function M.list_weekly_todos()
       ["default"] = function(selected)
         local date = selected[1]
         local note = obsidian.Note.from_file(dateToFile[date])
-        note:open({ sync = true })
+        note:open({ sync = false })
       end,
       ["ctrl-v"] = function(selected)
         local date = selected[1]
         local note = obsidian.Note.from_file(dateToFile[date])
-        note:open({ sync = true, open_strategy = "vsplit" })
+        note:open({ sync = false, open_strategy = "vsplit" })
       end,
       ["ctrl-s"] = function(selected)
         local date = selected[1]
         local note = obsidian.Note.from_file(dateToFile[date])
-        note:open({ sync = true, open_strategy = "hsplit" })
+        note:open({ sync = false, open_strategy = "hsplit" })
       end,
     }
   })
@@ -286,7 +286,7 @@ function M.goto_or_create_todays_weekly_todo()
   local todo_path = obsidian_path .. "/" .. todo_filename .. ".md"
   if vim.fn.filereadable(todo_path) == 1 then
     local note = obsidian.Note.from_file(todo_path)
-    note:open({ sync = true })
+    note:open({ sync = false })
   else
     local note = obsidian.Note.create({
       id = todo_filename,
@@ -297,7 +297,7 @@ function M.goto_or_create_todays_weekly_todo()
       insert_frontmatter = false,
       template = "weekly-todo-tmpl",
     })
-    note:open({ sync = true })
+    note:open({ sync = false })
   end
 end
 
