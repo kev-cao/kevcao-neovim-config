@@ -79,7 +79,12 @@ return {
   },
   ft = {"go"},
   linter = {
-    golangcilint = nil
+    golangcilint = {
+      args = {
+        "run",
+        "--modules-download-mode=mod",
+      },
+    },
   },
   {
     "charlespascoe/vim-go-syntax",
