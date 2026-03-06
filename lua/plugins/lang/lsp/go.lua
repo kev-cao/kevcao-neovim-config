@@ -74,13 +74,16 @@ return {
         },
       },
     },
-    golangci_lint_ls = {
-      cmd = { "golangci-lint-langserver" },
-      root_markers = { ".git", "go.mod" },
-      single_file_support = true,
-    },
   },
   ft = {"go"},
+  linter = {
+    golangcilint = {
+      args = {
+        "run",
+        "--modules-download-mode=mod",
+      },
+    },
+  },
   {
     "charlespascoe/vim-go-syntax",
     ft = { "go", "gomod", "gowork", "gotmpl" },
