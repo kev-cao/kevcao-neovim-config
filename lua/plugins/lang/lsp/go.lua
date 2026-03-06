@@ -71,7 +71,13 @@ return {
         },
       },
     },
+    golangci_lint_ls = {
+      cmd = { "golangci-lint-langserver" },
+      filetypes = { "go" },
+      single_file_support = true,
+    }
   },
+  ft = {"go"},
   linter = { "golangcilint" },
   {
     "charlespascoe/vim-go-syntax",
