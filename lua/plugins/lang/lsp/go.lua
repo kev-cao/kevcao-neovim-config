@@ -78,7 +78,9 @@ return {
     }
   },
   ft = {"go"},
-  linter = { "golangcilint" },
+  linter = {
+    golangcilint = nil
+  },
   {
     "charlespascoe/vim-go-syntax",
     ft = { "go", "gomod", "gowork", "gotmpl" },

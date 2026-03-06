@@ -8,7 +8,9 @@ return {
     rust_analyzer = nil
   },
   ft = { "rs" },
-  linter = { "clippy" },
+  linter = {
+    clippy = nil
+  },
   {
     'mrcjkb/rustaceanvim',
     version = '^7', -- Recommended
