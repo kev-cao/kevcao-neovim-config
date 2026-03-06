@@ -78,14 +78,6 @@ return {
     }
   },
   ft = {"go"},
-  linter = {
-    golangcilint = {
-      args = {
-        "run",
-        "--modules-download-mode=mod",
-      },
-    },
-  },
   {
     "charlespascoe/vim-go-syntax",
     ft = { "go", "gomod", "gowork", "gotmpl" },
