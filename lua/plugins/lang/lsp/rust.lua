@@ -7,7 +7,8 @@ return {
   lsp = {
     rust_analyzer = nil
   },
-  ft = { "rs" },
+  ft = { "rust" },
+  formatter = { "rustfmt" },
   linter = {
     clippy = nil
   },

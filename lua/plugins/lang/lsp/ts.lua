@@ -9,7 +9,8 @@ return {
   lsp = {
     tsserver = nil,
   },
-  ft = { "ts", "tsx", "js", "jsx" },
+  ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  formatter = { "prettier" },
   {
     "pmizio/typescript-tools.nvim",
     dependencies = {

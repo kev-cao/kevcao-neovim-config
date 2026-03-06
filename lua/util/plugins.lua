@@ -5,13 +5,13 @@
 local M = {}
 
 --- Gets all language specific specs in plugins/lang/lsp.
---- @return _ table A table containing all language specific specs, containing
+--- @return LspSpec[] Specs A table containing all language specific specs, containing
 --- related plugins and configurations.
 function M.get_lsp_specs()
   local uv = vim.loop
   local stats = uv.fs_readdir(uv.fs_opendir(vim.fn.stdpath('config') .. "/lua/plugins/lang/lsp", nil, 1000))
   if not stats then
-    return
+    return {}
   end
 
   local specs = {}

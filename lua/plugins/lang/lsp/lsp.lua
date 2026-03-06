@@ -2,9 +2,10 @@ local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 --- @class LspSpec
---- @field lsp table<string, vim.lsp.Config|nil> Mapping of LSPs to their options, or nil for defaults.
---- @field ft string[] Filetypes associated with the language
---- @field linter? table<string, PartialLinter|(fun(): lint.Linter)|nil> Linters to use for the filetypes, mapped to their configuration, or nil for defaults.
+--- @field ft string[] Filetypes that linters and formatters will apply to (output of vim.bo.filetype)
+--- @field lsp? table<string, vim.lsp.Config|nil> Mapping of LSPs to their options, or nil for defaults.
+--- @field linter? table<string, PartialLinter|(fun(): lint.Linter)|nil> Linters to use mapped to their configuration, or nil for defaults.
+--- @field formatter? conform.FiletypeFormatter Formatters to use
 
 
 --- @class (partial) PartialLinter: lint.Linter
@@ -25,7 +26,7 @@ return {
       local plugins = require("util.plugins")
       local lsp_specs = plugins.get_lsp_specs()
       for _, spec in pairs(lsp_specs) do
-        for lsp, lsp_opts in pairs(spec.lsp) do
+        for lsp, lsp_opts in pairs(spec.lsp or {}) do
           if lsp_opts ~= nil then
             opts.servers[lsp] = lsp_opts
           end

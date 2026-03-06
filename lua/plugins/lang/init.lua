@@ -4,7 +4,8 @@ local M = {
   { import = "plugins.lang.cmp" },
   { import = "plugins.lang.lint" },
   { import = "plugins.lang.lsp.lsp" },
-  { import = "plugins.lang.parser" }
+  { import = "plugins.lang.parser" },
+  { import = "plugins.lang.format" }
 }
 
 --- This adds import specifications for specific languages from other files in

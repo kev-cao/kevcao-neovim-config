@@ -48,10 +48,11 @@ an exhaustive list, but does contain a majority of requirements.
     - For pasting images from the clipboard:
         - For MacOS: `pngpaste` (`brew install pngpaste`)
         - For Linux: `xclip` for `X11` or `wl-clipboard` for `Wayland`
-- lsp/debugging
+- lsp/debugging/formatters
     - [delve](https://github.com/go-delve/delve/tree/master/Documentation/installation)
     - [golangci-lint](https://golangci-lint.run/docs/welcome/install/)
     - [golangci-lint-langserver](https://github.com/nametake/golangci-lint-langserver)
+    - [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports)
 - nvim-treesitter
     - C compiler
     - libstdc++

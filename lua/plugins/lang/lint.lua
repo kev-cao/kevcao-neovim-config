@@ -14,7 +14,9 @@ return {
       return config.plugin_enabled("nvim-lint")
     end,
     opts = function()
-      local opts = {}
+      local opts = {
+        linters_by_ft = {},
+      }
       local lsp_specs = plugins.get_lsp_specs()
       for _, spec in ipairs(lsp_specs) do
         if spec.linter then
@@ -23,7 +25,7 @@ return {
             table.insert(linters, linter)
           end
           for _, ft in ipairs(spec.ft or {}) do
-            opts[ft] = linters
+            opts.linters_by_ft[ft] = linters
           end
         end
       end
@@ -31,7 +33,8 @@ return {
     end,
     config = function(_, opts)
       local lint = require("lint")
-      lint.linters_by_ft = opts
+      lint.linters_by_ft = opts.linters_by_ft or {}
+
       local lsp_specs = plugins.get_lsp_specs()
       for _, spec in ipairs(lsp_specs) do
         if spec.linter then

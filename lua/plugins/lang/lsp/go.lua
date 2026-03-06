@@ -81,9 +81,20 @@ return {
       args = {
         "run",
         "--modules-download-mode=mod",
+        "--output.json.path=stdout",
+        "--show-stats=false",
+        "--issues-exit-code",
+        "0",
       },
     },
   },
+  formatter = function()
+    local gofmt = "gofmt"
+    if vim.fn.executable("crlfmt") == 1 then
+      gofmt = "crlfmt"
+    end
+    return { "goimports", gofmt }
+  end,
   {
     "charlespascoe/vim-go-syntax",
     ft = { "go", "gomod", "gowork", "gotmpl" },

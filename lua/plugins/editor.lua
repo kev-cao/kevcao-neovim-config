@@ -58,62 +58,6 @@ return {
     end
   },
   {
-    "mhartington/formatter.nvim",
-    cond = function()
-      return config.plugin_enabled("formatter")
-    end,
-    opts = function()
-      local opts = {
-        filetype = {
-          typescript = {
-            require("formatter.filetypes.typescript").prettier,
-          },
-          javascript = {
-            require("formatter.filetypes.javascript").prettier,
-          },
-          typescriptreact = {
-            require("formatter.filetypes.typescriptreact").prettier,
-          },
-          javascriptreact = {
-            require("formatter.filetypes.javascriptreact").prettier,
-          },
-          go = {
-            function()
-              if vim.fn.executable("crlfmt") == 1 then
-                return {
-                  exe = "crlfmt",
-                  args = { "-w", "-tab=2", "-wrap=100", "-ignore '.(pb(.gw)?)|(\\.[eo]g)\\.go|/testdata/|^sql/parser/sql\\.go$|_generated(_test)?\\.go$'" },
-                }
-              else
-                return require("formatter.filetypes.go").gofmt()
-              end
-            end
-          },
-          rust = {
-            require("formatter.filetypes.rust").rustfmt,
-          },
-          terraform = {
-            require("formatter.filetypes.terraform").tofufmt,
-          },
-          ["*"] = {
-            require("formatter.filetypes.any").remove_trailing_whitespace,
-          },
-        }
-      }
-      --- Make all formatters use /tmp for tempfile_dir.
-      for ft, formatter in pairs(opts.filetype) do
-        opts.filetype[ft] = {
-          function()
-            local cfg = formatter[1]()
-            cfg.tempfile_dir = "/tmp"
-            return cfg
-          end
-        }
-      end
-      return opts
-    end,
-  },
-  {
     "rmagatti/goto-preview",
     event = "BufEnter",
     dependencies = {

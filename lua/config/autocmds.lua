@@ -5,15 +5,22 @@ local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 vim.api.nvim_create_augroup("lang", { clear = true })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    if config.plugin_enabled("conform") then
+      require("conform").format({ bufnr = args.buf })
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = "lang",
   pattern = "*",
   callback = function()
     if config.plugin_enabled("linter") then
       require("lint").try_lint()
-    end
-    if config.plugin_enabled("formatter") then
-      vim.cmd("FormatWrite")
     end
   end,
 })
