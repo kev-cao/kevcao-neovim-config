@@ -4,12 +4,14 @@
 
 --- @type LspSpec
 return {
-  lsp = { "rust_analyzer" },
+  lsp = {
+    rust_analyzer = nil
+  },
   ft = { "rs" },
+  linter = { "clippy" },
   {
     'mrcjkb/rustaceanvim',
     version = '^7', -- Recommended
     lazy = false, -- This plugin is already lazy
   },
-  linter = { "clippy" },
 }

@@ -6,7 +6,9 @@ local config = require("util.config")
 
 --- @type LspSpec
 return {
-  lsp = {"tsserver"},
+  lsp = {
+    tsserver = nil,
+  },
   ft = { "ts", "tsx", "js", "jsx" },
   {
     "pmizio/typescript-tools.nvim",

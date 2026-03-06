@@ -4,9 +4,10 @@
 
 --- @type LspSpec
 return {
-  lsp = {"clangd"},
-  ft = { "c", "cpp", "objc", "objcpp", "cuda" },
-  opts = {
-    filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+  lsp = {
+    clangd = {
+      filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+    }
   },
+  ft = { "c", "cpp", "objc", "objcpp", "cuda" },
 }

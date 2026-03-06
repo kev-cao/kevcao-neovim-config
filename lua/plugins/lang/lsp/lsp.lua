@@ -2,10 +2,9 @@ local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 --- @class LspSpec
---- @field lsp string[] LSP servers associated with the language
+--- @field lsp table<string, table<string, any>|nil> Mapping of LSPs to their options
 --- @field ft string[] Filetypes associated with the language
 --- @field linter? string[] Linters to use for the filetypes
---- @field opts? table<string, any> Options to pass to the LSP server setup
 
 return {
   {
@@ -23,9 +22,9 @@ return {
       local plugins = require("util.plugins")
       local lsp_specs = plugins.get_lsp_specs()
       for _, spec in pairs(lsp_specs) do
-        if spec.opts then
-          for _, lsp in ipairs(spec.lsp) do
-            opts.servers[lsp] = spec.opts
+        for lsp, lsp_opts in pairs(spec.lsp) do
+          if lsp_opts ~= nil then
+            opts.servers[lsp] = lsp_opts
           end
         end
       end

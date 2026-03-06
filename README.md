@@ -29,15 +29,8 @@ an exhaustive list, but does contain a majority of requirements.
 
 - nvim 0.11+
 - A lot of plugins required [patched fonts](https://www.nerdfonts.com/), so install them.
-- nvim-dap-go
-    - delve
 - copilot.vim
     - curl
-- nvim-treesitter
-    - C compiler
-    - libstdc++
-    - git
-    - tar/curl
 - fzf
     - fzf
     - ripgrep
@@ -51,9 +44,16 @@ an exhaustive list, but does contain a majority of requirements.
     - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code/setup)
 - opencode
     -[OpenCode CLI](https://opencode.ai)
-- nvim-lint
-    - [golangci-lint](https://golangci-lint.run/docs/welcome/install/)
 - obsidian.nvim
     - For pasting images from the clipboard:
         - For MacOS: `pngpaste` (`brew install pngpaste`)
         - For Linux: `xclip` for `X11` or `wl-clipboard` for `Wayland`
+- lsp/debugging
+    - [delve](https://github.com/go-delve/delve/tree/master/Documentation/installation)
+    - [golangci-lint](https://golangci-lint.run/docs/welcome/install/)
+    - [golangci-lint-langserver](https://github.com/nametake/golangci-lint-langserver)
+- nvim-treesitter
+    - C compiler
+    - libstdc++
+    - git
+    - tar/curl

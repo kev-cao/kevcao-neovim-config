@@ -4,17 +4,18 @@
 
 --- @type LspSpec
 return {
-  lsp = {"lua_ls"},
-  ft = { "lua" },
-  opts = {
-    cmd = { "lua-language-server" },
-    settings = {
-      Lua = {
-        diagnostics = {
-          enable = true,
-          globals = { "vim" },
+  lsp = {
+    lua_ls = {
+      cmd = { "lua-language-server" },
+      settings = {
+        Lua = {
+          diagnostics = {
+            enable = true,
+            globals = { "vim" },
+          },
         },
       },
-    },
+    }
   },
+  ft = { "lua" },
 }
