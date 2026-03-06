@@ -2,7 +2,7 @@ local config = require("util.config")
 local keymaps = require("config.keymaps")
 
 --- @class LspSpec
---- @field lsp table<string, table<string, any>|nil> Mapping of LSPs to their options, or nil for defaults.
+--- @field lsp table<string, vim.lsp.Config|nil> Mapping of LSPs to their options, or nil for defaults.
 --- @field ft string[] Filetypes associated with the language
 --- @field linter? table<string, PartialLinter|(fun(): lint.Linter)|nil> Linters to use for the filetypes, mapped to their configuration, or nil for defaults.
 

@@ -20,6 +20,9 @@ return {
         end
         if not client.server_capabilities.semanticTokensProvider then
           local semantic = client.config.capabilities.textDocument.semanticTokens
+          if not semantic then
+            return
+          end
           client.server_capabilities.semanticTokensProvider = {
             full = true,
             legend = { tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes },
@@ -73,9 +76,9 @@ return {
     },
     golangci_lint_ls = {
       cmd = { "golangci-lint-langserver" },
-      filetypes = { "go" },
+      root_markers = { ".git", "go.mod" },
       single_file_support = true,
-    }
+    },
   },
   ft = {"go"},
   {
