@@ -35,9 +35,6 @@ return {
       single_file_support = true,
       settings = {
         gopls = {
-          env = {
-            GOPACKAGESDRIVER = "./build/bazelutil/gopackagesdriver.sh",
-          },
           buildFlags = { "-mod=mod" },
           directoryFilters = {
             "-**/node_modules",
