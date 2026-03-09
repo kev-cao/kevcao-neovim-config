@@ -77,12 +77,11 @@ return {
     golangcilint = {
       args = {
         "run",
-        "--modules-download-mode=mod",
         "--output.json.path=stdout",
         "--show-stats=false",
-        "--issues-exit-code",
-        "0",
-      },
+        "--fast-only",
+        "--issues-exit-code", "0",
+      }
     },
   },
   formatter = function()
