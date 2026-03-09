@@ -277,8 +277,81 @@ function M.list_weekly_todos()
   })
 end
 
+--- Extracts unchecked tasks from the ## Tasks section of a todo file.
+--- @param file_path string The path to the todo file.
+--- @return string[] A list of unchecked task lines.
+local function extract_unchecked_tasks(file_path)
+  local tasks = {}
+  if vim.fn.filereadable(file_path) ~= 1 then
+    return tasks
+  end
+  local lines = vim.fn.readfile(file_path)
+  local in_tasks_section = false
+  for _, line in ipairs(lines) do
+    if string.match(line, "^## Tasks") then
+      in_tasks_section = true
+    elseif in_tasks_section and string.match(line, "^#") then
+      -- Hit a new section, stop extracting
+      break
+    elseif in_tasks_section and string.match(line, "^%s*%- %[ %]") then
+      table.insert(tasks, line)
+    end
+  end
+  return tasks
+end
+
+--- Computes the file path for last week's todo note.
+--- @return string The file path for last week's todo note.
+local function last_week_todo_path()
+  local one_week_ago = os.time() - (7 * 24 * 60 * 60)
+  local week = tostring(os.date("%Yw%V", one_week_ago))
+  local todo_filename = "todo-weekly-" .. week
+  local obsidian_path = M.get_obsidian_vault_path()
+  return obsidian_path .. "/" .. todo_filename .. ".md"
+end
+
+--- Injects unchecked tasks from last week into the current todo file.
+--- Replaces the empty "- [ ]" placeholder from the template.
+--- @param todo_path string The path to the current todo file.
+--- @param unchecked_tasks string[] The unchecked tasks to inject.
+local function inject_unchecked_tasks(todo_path, unchecked_tasks)
+  if #unchecked_tasks == 0 then
+    return
+  end
+  local lines = vim.fn.readfile(todo_path)
+  local new_lines = {}
+  local injected = false
+  for _, line in ipairs(lines) do
+    -- Replace the empty "- [ ]" placeholder with the injected tasks
+    if not injected and string.match(line, "^%- %[ %]%s*$") then
+      for _, task in ipairs(unchecked_tasks) do
+        table.insert(new_lines, task)
+      end
+      injected = true
+    else
+      table.insert(new_lines, line)
+    end
+  end
+  -- If we didn't find an empty "- [ ]" line, try to inject after "## Tasks"
+  if not injected then
+    new_lines = {}
+    for _, line in ipairs(lines) do
+      table.insert(new_lines, line)
+      if string.match(line, "^## Tasks") then
+        for _, task in ipairs(unchecked_tasks) do
+          table.insert(new_lines, task)
+        end
+        injected = true
+      end
+    end
+  end
+  if injected then
+    vim.fn.writefile(new_lines, todo_path)
+  end
+end
+
 --- Opens the weekly todo note for the current week, creating it if it does not
---- exist.
+--- exist. If creating a new todo, copies unchecked tasks from last week's todo.
 function M.goto_or_create_todays_weekly_todo()
   local obsidian = require("obsidian")
   local obsidian_path = M.get_obsidian_vault_path()
@@ -288,6 +361,10 @@ function M.goto_or_create_todays_weekly_todo()
     local note = obsidian.Note.from_file(todo_path)
     note:open({ sync = false })
   else
+    -- Extract unchecked tasks from last week before creating the new note
+    local last_week_path = last_week_todo_path()
+    local unchecked_tasks = extract_unchecked_tasks(last_week_path)
+
     local note = obsidian.Note.create({
       id = todo_filename,
       title = todo_filename,
@@ -297,6 +374,14 @@ function M.goto_or_create_todays_weekly_todo()
       insert_frontmatter = false,
       template = "weekly-todo-tmpl",
     })
+
+    -- Inject unchecked tasks after the template has been applied
+    vim.schedule(function()
+      inject_unchecked_tasks(todo_path, unchecked_tasks)
+      -- Reload the buffer to show the injected tasks
+      vim.cmd("checktime")
+    end)
+
     note:open({ sync = false })
   end
 end
