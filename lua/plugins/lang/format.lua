@@ -28,6 +28,10 @@ return {
             inherit = false,
           },
         },
+        format_after_save = {
+          async = true,
+          lsp_format = "fallback",
+        }
       }
       local lsp_specs = require("util.plugins").get_lsp_specs()
       for _, spec in ipairs(lsp_specs) do
