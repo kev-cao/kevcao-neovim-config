@@ -132,6 +132,12 @@ M.general = {
       mode = "n",
       desc = "Copy git blame hash for current line",
     },
+    {
+      "<C-g>",
+      keymaps.copy_current_filepath,
+      mode = { "n", "i", "v" },
+      desc = "Copy current file path to clipboard",
+    },
   },
 }
 

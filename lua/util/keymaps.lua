@@ -41,7 +41,7 @@ function M.copy_current_filepath()
     return
   end
   local relpath = vim.fn.fnamemodify(filepath, ":~:.")
-  vim.fn.setreg('+', filepath)
+  vim.fn.setreg('+', relpath)
   vim.notify(relpath, vim.log.levels.INFO)
 end
 
