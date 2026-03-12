@@ -3,6 +3,7 @@
 -- Note: except for autocomplete keymaps, which are found in plugins/cmp.lua
 
 local func = require("util.func")
+local keymaps = require("util.keymaps")
 
 local M = {}
 
@@ -127,26 +128,10 @@ M.general = {
     },
     {
       "<localleader>gh",
-      function()
-        local bufnr = vim.api.nvim_get_current_buf()
-        local filename = vim.api.nvim_buf_get_name(bufnr)
-        local row = vim.api.nvim_win_get_cursor(0)[1]
-        -- Use --porcelain to get machine-readable output and extract the hash
-        local blame_info = vim.fn.systemlist('git blame -L ' .. row .. ',+1 --porcelain -- ' .. filename)
-
-        if #blame_info >= 1 then
-          -- The first line of porcelain output contains the hash
-          local hash = string.sub(blame_info[1], 1, 40) -- Get full SHA
-          -- Copy to clipboard
-          vim.fn.setreg('+', hash)
-          vim.notify("Copied commit hash: " .. string.sub(hash, 1, 8), vim.log.levels.INFO) -- Print a truncated hash for confirmation
-        else
-          print("Could not get git blame info", vim.log.levels.ERROR)
-        end
-      end,
+      keymaps.git.copy_git_hash,
       mode = "n",
       desc = "Copy git blame hash for current line",
-    }
+    },
   },
 }
 
@@ -516,35 +501,13 @@ M.test = {
   },
 }
 
---- Helper function to expand Neotest UI.
---- @param opts { open: boolean, close: boolean, clear: boolean } | nil
-local function toggle_neotest_ui(opts)
-  if opts == nil then
-    opts = {}
-  end
-  if opts.close then
-    require("neotest").output_panel.close()
-    require("neotest").summary.close()
-  elseif opts.open then
-    require("neotest").output_panel.open()
-    require("neotest").summary.open()
-  else
-    require("neotest").output_panel.toggle()
-    require("neotest").summary.toggle()
-  end
-
-  if opts.clear then
-    require("neotest").output_panel.clear()
-  end
-end
-
 M.neotest = {
   keys = {
     {
       "<leader><S-t>s",
       function()
         require("neotest").run.run({ suite = true })
-        toggle_neotest_ui({ open = true })
+        keymaps.toggle_neotest_ui({ open = true })
       end,
       mode = "n",
       desc = "Run test suite",
@@ -553,7 +516,7 @@ M.neotest = {
       "<leader><S-t>f",
       function()
         require("neotest").run.run(vim.fn.expand("%"))
-        toggle_neotest_ui({ open = true, clear = true })
+        keymaps.toggle_neotest_ui({ open = true, clear = true })
       end,
       mode = "n",
       desc = "Run test file",
@@ -562,7 +525,7 @@ M.neotest = {
       "<leader><S-t>t",
       function()
         require("neotest").run.run()
-        toggle_neotest_ui({ open = true, clear = true })
+        keymaps.toggle_neotest_ui({ open = true, clear = true })
       end,
       mode = "n",
       desc = "Run nearest test",
@@ -580,7 +543,7 @@ M.neotest = {
       "<leader><S-t>l",
       function()
         require("neotest").run.run_last()
-        toggle_neotest_ui({ open = true, clear = true })
+        keymaps.toggle_neotest_ui({ open = true, clear = true })
       end,
       mode = "n",
       desc = "Run last test",
@@ -588,7 +551,7 @@ M.neotest = {
     {
       "<leader><S-t>o",
       function()
-        toggle_neotest_ui()
+        keymaps.toggle_neotest_ui()
       end,
       mode = "n",
       desc = "Toggle test output",
@@ -598,7 +561,7 @@ M.neotest = {
     {
       "q",
       function()
-        toggle_neotest_ui({ close = true })
+        keymaps.toggle_neotest_ui({ close = true })
       end,
       mode = { "n", "t" },
       desc = "Close test output panel",
@@ -742,37 +705,7 @@ M.fugitive = {
     },
     {
       "<leader>gm",
-      function()
-        if not func.in_git_repo() then
-          vim.notify("Not in a git repository.", vim.log.levels.ERROR)
-          return
-        end
-        if not func.has_merge_conflicts() then
-          vim.notify("No merge conflicts found.", vim.log.levels.INFO)
-          return
-        end
-
-        vim.cmd("tabnew")
-        vim.cmd("Git mergetool")
-        vim.schedule(function()
-          local qf = vim.fn.getqflist()
-          if #qf == 0 then
-            vim.notify("No merge conflicts found.", vim.log.levels.INFO)
-            return
-          end
-
-          -- Open quickfix, jump to the first entry, then launch the 3-way diff
-          vim.cmd("copen")   -- show the list (focus usually stays in the edit window)
-          local qfwin = vim.fn.getqflist({ winid = 1 }).winid
-          if qfwin ~= 0 then
-            vim.fn.win_gotoid(qfwin)
-            vim.cmd("wincmd J | resize 15")
-            vim.cmd("wincmd p")  -- return focus to edit window
-          end
-          vim.cmd("cc 1")       -- open the 1st quickfix entry in the current window
-          vim.cmd("Gvdiffsplit!") -- start Fugitive’s 3-way diff on that file
-        end)
-      end,
+      keymaps.git.mergetool.open,
       mode = "n",
       desc = "Open git mergetool",
     },
@@ -780,18 +713,7 @@ M.fugitive = {
   buflocal = {
     {
       "<localleader><S-w>",
-      function()
-        vim.cmd("Gwrite!")
-        vim.cmd("Git mergetool")
-        local qf = vim.fn.getqflist()
-        if #qf == 0 then
-          vim.notify("All conflicts resolved", vim.log.levels.INFO)
-          vim.cmd("tabc")
-          return
-        end
-        vim.cmd("cc 1")
-        vim.cmd("Gvdiffsplit!")
-      end,
+      keymaps.git.mergetool.write,
       mode = "n",
       desc = "Write (stage) current file",
     },
@@ -809,42 +731,13 @@ M.fugitive = {
     },
     {
       "<localleader><S-j>",
-      function()
-        local qfinfo = vim.fn.getqflist({ idx = 0, size = 0 })
-        local curr  = qfinfo.idx   -- current entry index (1-based, 0 if none)
-        local total = qfinfo.size  -- number of entries
-        if curr == 0 then
-          vim.notify("No more conflict entries.", vim.log.levels.ERROR)
-        end
-        vim.cmd("only")
-        vim.cmd("botright copen 15")
-        if curr == total then
-          vim.cmd("cfirst")
-        else
-          vim.cmd("cnext")
-        end
-        vim.cmd("Gvdiffsplit!")
-      end,
+      keymaps.git.mergetool.next_file,
       mode = "n",
       desc = "Next conflicting file",
     },
     {
       "<localleader><S-k>",
-      function()
-        local qfinfo = vim.fn.getqflist({ idx = 0, size = 0 })
-        local curr  = qfinfo.idx   -- current entry index (1-based, 0 if none)
-        if curr == 0 then
-          vim.notify("No more merge conflict entries.", vim.log.levels.ERROR)
-        end
-        vim.cmd("only")
-        vim.cmd("botright copen 15")
-        if curr == 1 then
-          vim.cmd("clast")
-        else
-          vim.cmd("cprev")
-        end
-        vim.cmd("Gvdiffsplit!")
-      end,
+      keymaps.git.mergetool.prev_file,
       mode = "n",
       desc = "Previous conflicting file",
     },
